@@ -27,8 +27,8 @@
 		}
 	}
 	else{
-		$title = '';
-		$content ='';
+		// $title = '';
+		// $content ='';
 		$msg = '';
 	}
 	
