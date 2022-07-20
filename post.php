@@ -10,11 +10,11 @@
 				- содержит только цифры
 				- (*) содержит только цифры, латинские буквы и -
 	*/
-	elseif(!file_exists('data/' . $fname)){
+	elseif(!file_exists('posts/' . $fname)){
 		echo 'Ошибка 404. Нет такой статьи!';
 	}
 	else{
-		$content = file_get_contents('data/' . $fname);
+		$content = file_get_contents('posts/' . $fname);
 
 		echo nl2br($content);
 	}

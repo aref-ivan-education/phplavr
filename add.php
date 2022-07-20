@@ -16,23 +16,24 @@
 			$msg = "Название должно содержать только латинский буквы, числа и знак '-'";
 		}
 
-		elseif(file_exists('data/' . $title)){
+		elseif(file_exists('posts/' . $title)){
 			$msg= "такая статья уже существует";
 		}
 
 		else{
-			file_put_contents("data/$title",$content);
+			file_put_contents("posts/$title",$content);
 			header("Location: index.php");
 			exit();
 		}
 	}
 	else{
-		// $title = '';
-		// $content ='';
+		$title = '';
+		$content ='';
 		$msg = '';
 	}
 	
 ?>
+
 <form method="post">
 	Название<br>
 	<input type="text" name="title" value = "<?= $title?>"><br>

@@ -3,7 +3,7 @@
     $error="";
     $msg="";
     $title=$_GET["fname"] ?? null;
-    $content=(is_file("data/$title"))?file_get_contents("data/$title"):'';
+    $content=(is_file("posts/$title"))?file_get_contents("posts/$title"):'';
     // если зашли get
 	if(!count($_POST) > 0){
         //проверки валидности заголовка
@@ -13,7 +13,7 @@
             elseif(!checkTitle($title)){
                 $error ='Ошибка 404, не корректное название';
             }
-            elseif(!file_exists('data/' . $title)){
+            elseif(!file_exists('posts/' . $title)){
                 $error ='Ошибка 404. Нет такой статьи!';
             }
     }
@@ -37,13 +37,13 @@
         // проверка на изменение title и запись статьи
         else{
             if($titlePost==$title){
-                file_put_contents("data/$title",$contentPost);
+                file_put_contents("posts/$title",$contentPost);
                 header("Location: index.php");
                 exit();
             }
             else{
-                unlink("data/$title");
-                file_put_contents("data/$titlePost",$contentPost);
+                unlink("posts/$title");
+                file_put_contents("posts/$titlePost",$contentPost);
                 header("Location: index.php");
                 exit();
 
