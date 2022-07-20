@@ -1,5 +1,5 @@
 <?php
-    $regName="#^[a-zA-Z0-9- ]+$#";
+    require_once("functions.php");
 
 	if(count($_POST) > 0){
 		$title = trim($_POST['title']);
@@ -12,7 +12,7 @@
 			проверка корректности title
 			проверка уникальности title
 		*/
-		elseif(!preg_match($regName,$title)){
+		elseif(!checkTitle($title)){
 			$msg = "Название должно содержать только латинский буквы, числа и знак '-'";
 		}
 
