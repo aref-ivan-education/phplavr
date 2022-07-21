@@ -3,23 +3,15 @@
  
 	session_start();
 	$msg='';
-	$urlCurrent=((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-	
-
-	if(!isset($_SESSION['loginRef']) || isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']!=$urlCurrent){
-		$_SESSION['loginRef']=$_SERVER['HTTP_REFERER'];
-	}
-    else $_SESSION['loginRef']="/";
 	if(count($_POST) > 0){
 		if($_POST['login'] == $user['login']&& $_POST['password'] == $user['password']){
 			$_SESSION['is_auth'] = true;			
 			
-			if($_POST['remember']){
+			if(isset($_POST['remember'])&&$_POST['remember']){
 				setcookie('login',$user['login'], time() + 3600 * 24 * 7, '/');
 				setcookie('password',myhash($user['password']), time() + 3600 * 24 * 7, '/');
 			}
-			
+			var_dump($_SESSION);
 			header('Location:'.$_SESSION['loginRef']);
 			unset($_SESSION['loginRef']);
 			exit();
@@ -33,6 +25,9 @@
 				
 			}
 		}
+	}
+	else{
+		$_SESSION['loginRef'] = $_SERVER['HTTP_REFERER']??"/";
 	}
 ?>
 <form method="post">

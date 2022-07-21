@@ -1,7 +1,9 @@
-<?php
+<?
     require_once("functions.php");
+	if(isAuth($user)):?>
+		Привет,<?=$user['login']?> <form action="logout.php" method="post"> <button name="logout">Выйти</button>  </form>
 
-	if(count($_POST) > 0){
+<? if(count($_POST) > 0){
 		$title = trim($_POST['title']);
 		$content = trim($_POST['content']);
 		
@@ -42,3 +44,7 @@
 	<input type="submit" value="Добавить">
 </form>
 <?php echo $msg; ?>
+
+<?else:?>
+	<a href="auth.php">Войти</a><br>
+<?endif?>
