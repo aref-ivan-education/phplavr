@@ -16,8 +16,8 @@
 			$_SESSION['is_auth'] = true;			
 			
 			if($_POST['remember']){
-				setcookie('login','admin', time() + 3600 * 24 * 7, '/');
-				setcookie('password',myhash("qwerty"), time() + 3600 * 24 * 7, '/');
+				setcookie('login',$user['login'], time() + 3600 * 24 * 7, '/');
+				setcookie('password',myhash($user['password']), time() + 3600 * 24 * 7, '/');
 			}
 			
 			header('Location:'.$_SESSION['loginRef']);
@@ -25,7 +25,7 @@
 			exit();
 		}
 		else {
-			if($_POST['login'] == 'admin'){
+			if($_POST['login'] == $user['login']){
 				$msg="Пароль не верен";
 				
 			}else {

@@ -1,4 +1,11 @@
-<a href="auth.php">Войти</a><br>
+<? include_once('functions.php');?>
+<? ?>
+
+<?if(isAuth($user)):?>
+	Привет,<?=$user['login']?> <form action="logout.php" method="post"> <button name="logout">Выйти</button>  </form>
+<?else:?>
+	<a href="auth.php">Войти</a><br>
+<?endif?>
 
 <?php
 	

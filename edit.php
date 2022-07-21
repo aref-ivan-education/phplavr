@@ -1,5 +1,6 @@
 <?php
     include_once("functions.php");
+    var_dump($_SESSION);
     $error="";
     $msg="";
     $title=$_GET["fname"] ?? null;
