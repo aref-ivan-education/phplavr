@@ -1,20 +1,33 @@
+<? include_once('functions.php');?>
+
 <?php
+	
+	$id_new = $_GET['id_new'] ?? null;
+	$content="";
+	
 
-	$fname = $_GET['fname'] ?? null;
-
-	if($fname === null){
+	if($id_new === null){
 		echo 'Ошибка 404, не передано название';
 	}
-	/* 
-		todo: проверить корректность параметра 
-				- содержит только цифры
-				- (*) содержит только цифры, латинские буквы и -
-	*/
-	elseif(!file_exists('posts/' . $fname)){
-		echo 'Ошибка 404. Нет такой статьи!';
-	}
 	else{
-		$content = file_get_contents('posts/' . $fname);
+		$query = db_query("SELECT * FROM `news` WHERE id_new='$id_new'");
+		$new = $query->fetch();
+		
 
-		echo nl2br($content);
+	// }
+	// elseif(!file_exists('posts/' . $fname)){
+	// 	echo 'Ошибка 404. Нет такой статьи!';
+	// }
+	// else{
+		if($new){
+			$content = $new["content"] ;
+		}
+		else{
+			echo 'Ошибка 404. Нет такой статьи!';
+
+		}
+
+		
 	}
+?>
+<?=$content?>
