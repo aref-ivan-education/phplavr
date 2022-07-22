@@ -19,4 +19,4 @@
 	<a href="edit.php?fname=<?=$new['id-new']?>"> &#9997</a><br>
 	
 <?endforeach?>
-<a href="add.php">Добавить</a>
+<a href="add.php">Добавить</a> 
