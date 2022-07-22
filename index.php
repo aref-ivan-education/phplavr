@@ -15,8 +15,12 @@
 	
 <?foreach($news as $new):?>
 	
-	<a href="post.php?id_new=<?=$new['id_new']?>"><?=$new['title']?></a>
+	<a href="post.php?id_new=<?=$new['id_new']?>"><h3><?=$new['title']?></h3></a>
 	<a href="edit.php?id_new=<?=$new['id_new']?>"> &#9997</a><br>
+	<form action="delete.php" method="post">
+		<input type="hidden" name="id_new" value="<?=$new['id_new']?>">
+		<button>Удалить</button>  
+	</form>
 	
 <?endforeach?>
 <a href="add.php">Добавить</a> 

@@ -35,10 +35,7 @@
         // получаем title и content из полей
         $titlePost = trim($_POST['title']);
         $contentPost = trim($_POST['content']);
-        echo $title;
-        echo $titlePost;
-        echo $content;
-        echo $contentPost;
+
 
         // проверка значений
         if($titlePost == '' || $contentPost == ''){
