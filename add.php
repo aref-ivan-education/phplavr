@@ -1,8 +1,7 @@
 <?
     require_once("functions.php");
-	if(isAuth($user)):?>
-		Привет,<?=$user['login']?> <form action="logout.php" method="post"> <button name="logout">Выйти</button>  </form>
-
+	// if(isAuth($user)):?>
+		<!-- Привет,<?//=$user['login']?> <form action="logout.php" method="post"> <button name="logout">Выйти</button>  </form> -->
 <? if(count($_POST) > 0){
 		$title = trim($_POST['title']);
 		$content = trim($_POST['content']);
@@ -15,15 +14,18 @@
 			проверка уникальности title
 		*/
 		elseif(!checkTitle($title)){
-			$msg = "Название должно содержать только латинский буквы, числа и знак '-'";
+			$msg = "Название должно содержать только буквы, числа и знак '-'";
 		}
 
-		elseif(file_exists('posts/' . $title)){
-			$msg= "такая статья уже существует";
-		}
+		// elseif(file_exists('posts/' . $title)){
+		// 	$msg= "такая статья уже существует";
+		// }
 
 		else{
-			file_put_contents("posts/$title",$content);
+			db_query("INSERT INTO news (title, content) VALUES (:title, :content)", [
+				'title' => $title,
+				'content' => $content
+			]);
 			header("Location: index.php");
 			exit();
 		}
@@ -45,6 +47,6 @@
 </form>
 <?php echo $msg; ?>
 
-<?else:?>
-	<a href="auth.php">Войти</a><br>
-<?endif?>
+<?//else:?>
+	<!-- <a href="auth.php">Войти</a><br> -->
+<?//endif?>
