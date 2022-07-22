@@ -16,7 +16,7 @@
 <?foreach($news as $new):?>
 	
 	<a href="post.php?id_new=<?=$new['id_new']?>"><?=$new['title']?></a>
-	<a href="edit.php?fname=<?=$new['id_new']?>"> &#9997</a><br>
+	<a href="edit.php?id_new=<?=$new['id_new']?>"> &#9997</a><br>
 	
 <?endforeach?>
 <a href="add.php">Добавить</a> 
