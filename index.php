@@ -1,19 +1,22 @@
 <? include_once('functions.php');?>
 
-<?if(isAuth($user)):?>
-	Привет,<?=$user['login']?> <form action="logout.php" method="post"> <button name="logout">Выйти</button>  </form>
-<?else:?>
-	<a href="auth.php">Войти</a><br>
-<?endif?>
+<?//if(isAuth($user)):?>
+	<!-- Привет,<?//=$user['login']?> <form action="logout.php" method="post"> <button name="logout">Выйти</button>  </form> -->
+<?//else:?>
+	<!-- <a href="auth.php">Войти</a><br> -->
+<?//endif?>
 
 <?php
 	
-	$list = scandir('posts');
+	$query = db_query("SELECT * FROM news ORDER BY date_created DESC");
+
+	$news = $query->fetchAll();
+?>
 	
-	foreach($list as $fname):
-		if(is_file("posts/$fname")):?>
-			<a href="post.php?fname=<?=$fname?>"><?=$fname?></a>
-			<a href="edit.php?fname=<?=$fname?>"> &#9997</a><br>
-		<?endif?>
-	<?endforeach?>
+<?foreach($news as $new):?>
+	
+	<a href="post.php?<?=$new['id-new']?>"><?=$new['title']?></a>
+	<a href="edit.php?fname=<?=$new['id-new']?>"> &#9997</a><br>
+	
+<?endforeach?>
 <a href="add.php">Добавить</a>
