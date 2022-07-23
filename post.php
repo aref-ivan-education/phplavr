@@ -3,31 +3,29 @@
 <?php
 	
 	$id_new = $_GET['id_new'] ?? null;
-	$content="";
-	
+	$err="";
 
-	if($id_new === null){
-		echo 'Ошибка 404, не передано название';
+	if(!checkID($id_new)){
+		$err= 'Ошибка 404,  Статья не найдена';
 	}
 	else{
-		$query = db_query("SELECT * FROM `news` WHERE id_new='$id_new'");
+		$query = db_query("SELECT * FROM `news` WHERE id_new=:id",
+							['id'=>$id_new]);
 		$new = $query->fetch();
 		
-
-	// }
-	// elseif(!file_exists('posts/' . $fname)){
-	// 	echo 'Ошибка 404. Нет такой статьи!';
-	// }
-	// else{
 		if($new){
 			$content = $new["content"] ;
 		}
 		else{
-			echo 'Ошибка 404. Нет такой статьи!';
+			$err='Ошибка 404. Нет такой статьи!';
 
 		}
 
 		
 	}
 ?>
-<?=$content?>
+<?if($err==""):?>
+	<?=$content?>
+<?else:?>
+	<?=$err?>
+<?endif?>

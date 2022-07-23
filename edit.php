@@ -4,10 +4,11 @@
     $msg="";
     $id_new = $_GET['id_new'] ?? null;
     // $content=(is_file("posts/$title"))?file_get_contents("posts/$title"):'';
-    if($id_new === null){
+    if(!checkID($id_new)){
 		$error="Ошибка 404. Нет такой статьи.";
 	}
-        $query = db_query("SELECT * FROM `news` WHERE id_new='$id_new'");
+        $query = db_query("SELECT * FROM `news` WHERE id_new=:id",
+                            ['id'=>$id_new]);
         $new = $query->fetch();
             if(!$new){
                 $error='Ошибка 404. Нет такой статьи!';
@@ -49,9 +50,10 @@
         }
         // проверка на изменение title и запись статьи
         else{
-            db_query("UPDATE news SET title=:title, content=:content  WHERE id_new ='$id_new'", [
+            db_query("UPDATE news SET title=:title, content=:content  WHERE id_new =:id", [
 				'title' => $titlePost,
-				'content' => $contentPost
+				'content' => $contentPost,
+                'id' =>$id_new
 			]);
 			header("Location: index.php");
 			exit();

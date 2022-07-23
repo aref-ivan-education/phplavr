@@ -23,6 +23,12 @@
         return preg_match($regName,$title);
     } 
 
+    function checkID($id){
+        $regName="#^[0-9]+$#";
+        return preg_match($regName,$id);
+
+    }
+
     function myHash($str){
 		return hash('sha256', $str . 'erwdsddsdsds');
    }
