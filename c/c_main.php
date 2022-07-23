@@ -1,5 +1,5 @@
 <?
-    include_once("./m/m_articles.php");
+    include_once("m/m_articles.php");
     $articles=get_article_all();
     $categores=get_article_categores();
     $users=get_users();

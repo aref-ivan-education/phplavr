@@ -5,7 +5,7 @@
     <!--- basic page needs
     ================================================== -->
     <meta charset="utf-8">
-    <title>Abstract</title>
+    <title>Title</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -15,8 +15,8 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/vendor.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/vendor.css">
 
     <!-- script
     ================================================== -->
@@ -113,54 +113,90 @@
         </div> <!-- end s-header__content -->
 
     </header> <!-- end header -->
+<?if($err==""):?>
+    qweeeiuyeqiuyiqweu
+    <section class="s-content s-content--single">
+        <div class="row">
+            <div class="column large-12">
 
-    <section class="s-bricks">
+                <article class="s-post entry format-standard">
 
-        <div class="masonry">
-            <div class="bricks-wrapper h-group">
+                    <div class="s-content__media">
+                        <div class="s-content__post-thumb">
+                            <img src="images/thumbs/single/standard/standard-1050.jpg" 
+                                 srcset="images/thumbs/single/standard/standard-2100.jpg 2100w, 
+                                         images/thumbs/single/standard/standard-1050.jpg 1050w, 
+                                         images/thumbs/single/standard/standard-525.jpg 525w" sizes="(max-width: 2100px) 100vw, 2100px" alt="">
+                        </div>
+                    </div> <!-- end s-content__media -->
 
-                <div class="grid-sizer"></div>
+                    <div class="s-content__primary">
 
-                <?foreach($articles as $article):?>
-                    <article class="brick entry format-standard animate-this">
-    
-                        <div class="entry__thumb">
-                            <a href="/c/c_post.php?id_arcicle=<?=$article['id_article']?>" class="thumb-link">
-                                <img src="assets/images/thumbs/masonry/beetle-600.jpg" 
-                                    srcset="assets/images/thumbs/masonry/beetle-600.jpg 1x, assets/images/thumbs/masonry/beetle-1200.jpg 2x" alt="">
-                            </a>
-                        </div> <!-- end entry__thumb -->
+                        <h2 class="s-content__title s-content__title--post"><?=$article['title']?></h2>
 
-                        <div class="entry__text">
-                            <div class="entry__header">
+                        <ul class="s-content__post-meta">
+                            <li class="date"><?=$article['date']?></li>
+                            <li class="cat"><a href=""><?=$categores[$article['id_cat']-1]['name']?></a><a href="">Design</a></li>
+                        </ul>
 
-                                <div class="entry__meta">
-                                    <span class="entry__cat-links">
-                                        <a href="#"><?=$categores[$article['id_cat']-1]['name']?></a>
-                                    </span>
-                                </div>
+                        <p class="lead">
+                            <?=$article['content']?>
+                        </p>
 
-                                <h1 class="entry__title"><a href="/c/c_post.php?id_article=<?=$article['id_article']?>"><?=$article['title']?></a></h1>
-                                
-                            </div>
-                            <div class="entry__excerpt">
-                                <p>
-                                <?=$article['excerpt']?>
+                        <p class="s-content__post-tags">
+                            <span>Tagged in :</span>
+                            <a href="#">orci</a><a href="#">lectus</a><a href="#">varius</a><a href="#">turpis</a>
+                        </p>
+
+                        <div class="s-content__author">
+                            <img src="images/avatars/user-06.jpg" alt="">
+
+                            <div class="about">
+                                <h5><a href="#"><?=$users[$article['id_user']]['name']?></a></h5>
+                            
+                                <p>Alias aperiam at debitis deserunt dignissimos dolorem doloribus, fuga fugiat impedit laudantium magni maxime nihil nisi quidem quisquam sed ullam voluptas voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                                 </p>
+
+                                <ul class="author-social">
+                                    <li><a href="#0">Facebook</a></li>
+                                    <li><a href="#0">Twitter</a></li>
+                                    <li><a href="#0">Dribbble</a></li>
+                                    <li><a href="#0">Instagram</i></a></li>
+                                </ul>
                             </div>
-                        </div> <!-- end entry__text -->
-
-                    </article> <!-- end article -->
-                <?endforeach?>
+                        </div> <!-- end s-content__author -->
 
 
-            </div> <!-- end brick-wrapper --> 
-        </div> <!-- end masonry -->
+                        <!-- <div class="s-content__pagenav group"> -->
+                            <!-- <div class="prev-nav">
+                                <a href="#" rel="prev">
+                                    <span>Previous</span>
+                                    Tips on Minimalist Design 
+                                </a>
+                            </div>
+                             <div class="next-nav">
+                                 <a href="#" rel="next">
+                                     <span>Next</span>
+                                    Less Is More 
+                                 </a>
+                             </div>
+                         </div> end s-content__pagenav -->
+
+                    </div> <!-- end s-content__primary -->
+                </article>
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
 
 
-    </section> <!-- end s-bricks -->
-    
-     <!-- footer
+
+
+    </section> <!-- end s-content -->
+<?else:?>
+    <?=$err?>
+    2222
+<?endif?>
+<!-- footer
     ================================================== -->
     <footer class="s-footer">
 
@@ -255,9 +291,9 @@
 
    <!-- Java Script
    ================================================== -->
-   <script src="assets/js/jquery-3.2.1.min.js"></script>
-   <script src="assets/js/plugins.js"></script>
-   <script src="assets/js/main.js"></script>
+   <script src="/assets/js/jquery-3.2.1.min.js"></script>
+   <script src="/assets/js/plugins.js"></script>
+   <script src="/assets/js/main.js"></script>
 
 </body>
 
