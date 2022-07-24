@@ -33,46 +33,29 @@
 
 		return $new = $query->fetch();
     }
-    function set_article_category_name($articles){
-        $categores=get_article_categores();
-        for ($i=0; $i <count($articles) ; $i++) { 
-            if($articles[$i]['id_cat']!='0'){
-                foreach($categores as $category){
-                    if($articles[$i]['id_cat']==$category['id_cat']){
-                        $articles[$i]['category']=$category['name'];
+    
+    function add_field_name_by_id($change_arr,$targetArr,$field_name,$id_name,$name){
+
+        for ($i=0; $i <count($change_arr) ; $i++) { 
+            if($change_arr[$i][$id_name]!='0'){
+
+                foreach($targetArr as $item){
+                    if($change_arr[$i][$id_name]==$item[$id_name]){
+                        $change_arr[$i][$field_name]=$item[$name];
                         break;
                     }
                     else{
-                        $articles[$i]['category']="";
+                        $change_arr[$i][$field_name]="";
                     }
                 }
             }
             else{
-                $articles[$i]['category']="";  
+                $change_arr[$i][$field_name]="";  
             }
         }
-        return $articles;
+        return $change_arr;
     }
-    function set_article_autor($articles){
-        $users=get_users();
-        for ($i=0; $i <count($articles) ; $i++) { 
-            if($articles[$i]['id_user']!='0'){
-                foreach($users as $user){
-                    if($articles[$i]['id_user']==$user['id_user']){
-                        $articles[$i]['autor']=$user['name'];
-                        break;
-                    }
-                    else{
-                        $articles[$i]['autor']=""; 
-                    }
-                }
-            }
-            else{
-                $articles[$i]['autor']="";  
-            }
-        }
-        return $articles;
-    }
+    
     
 
 ?>
