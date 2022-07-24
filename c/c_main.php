@@ -11,7 +11,7 @@
     $isAuth=isAuth();
 
     if($isAuth){
-        $user_name=(isset($_COOKIE['login']))?get_user($_COOKIE['login'])['name']:'anonim';
+        $user_name=$_SESSION['userName']??'anonim';
     }
 
     

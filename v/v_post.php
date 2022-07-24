@@ -52,6 +52,13 @@
                     <img src="/assets/images/logo.svg" alt="Homepage">
                 </a>
             </div>
+            <div class="s-header__auth">
+                <?if($isAuth):?>
+                    Привет, <?=$user_name?>
+                <?else:?>
+                    <a href="/c/c_auth.php">Войти</a>
+                <?endif?>
+            </div>
 
             <nav class="s-header__nav-wrap">
 
@@ -135,7 +142,7 @@
 
                         <ul class="s-content__post-meta">
                             <li class="date"><?=$article['date']?></li>
-                            <li class="cat"><a href=""><?=$categores[$article['id_cat']-1]['name']?></a><a href="">Design</a></li>
+                            <li class="cat"><a href=""><?=$category?></a><a href="">Design</a></li>
                         </ul>
 
                         <p class="lead">
@@ -151,11 +158,7 @@
                             <img src="/assets/images/avatars/user-06.jpg" alt="">
 
                             <div class="about">
-                                <h5><a href="#"><?=$users[$article['id_user']]['name']?></a></h5>
-
-                            
-
-
+                                <h5><a href="#"><?=$autor?></a></h5>
 
                 </article>
 
@@ -170,15 +173,17 @@
 
 
     </section> <!-- end s-content -->
-    <div class="row">
-        <div class="column large-12">
-            <form>                    
-                <a class="btn btn--primary h-full-width" href="/c/c_edit.php?id_article=<?=$article['id_article']?>">Редактировать</a>
-            </form>
+    <?if($isAuth):?>
+        <div class="row">
+            <div class="column large-12">
+                <form>                    
+                    <a class="btn btn--primary h-full-width" href="/c/c_edit.php?id_article=<?=$article['id_article']?>">Редактировать</a>
+                </form>
+            </div>
         </div>
-    </div>
+    <?endif?>
 <?else:?>
-    <?=$err?>
+    <div class="row"><?=$err?></div>
 <?endif?>
 <!-- footer
     ================================================== -->
