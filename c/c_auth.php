@@ -22,6 +22,7 @@
             if($user&& $password == $user['pass']){
                 $_SESSION['is_auth'] = true;
                 $_SESSION['userName']=$user['name'];			
+                $_SESSION['userLogin']=$user['login'];
                 
                 if(isset($_POST['remember'])&&$_POST['remember']){
                     setcookie('login',$user['login'], time() + 3600 * 24 * 7, '/');

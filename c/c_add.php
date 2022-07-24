@@ -3,8 +3,8 @@
     include_once("../m/m_check.php");
 
     if(count($_POST) > 0){
-		$title = trim($_POST['title']);
-		$content = trim($_POST['content']);
+		$title = checkInput($_POST['title']);
+		$content = checkInput($_POST['content']);
 		
 		if($title == '' || $content == ''){
 			$msg = 'Заполните все поля';
