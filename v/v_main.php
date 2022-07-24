@@ -125,7 +125,7 @@
                     <article class="brick entry format-standard animate-this">
     
                         <div class="entry__thumb">
-                            <a href="/c/c_post.php?id_arcicle=<?=$article['id_article']?>" class="thumb-link">
+                            <a href="/c/c_post.php?id_article=<?=$article['id_article']?>" class="thumb-link">
                                 <img src="assets/images/thumbs/masonry/beetle-600.jpg" 
                                     srcset="assets/images/thumbs/masonry/beetle-600.jpg 1x, assets/images/thumbs/masonry/beetle-1200.jpg 2x" alt="">
                             </a>
@@ -136,7 +136,7 @@
 
                                 <div class="entry__meta">
                                     <span class="entry__cat-links">
-                                        <a href="#"><?=$categores[$article['id_cat']-1]['name']?></a>
+                                        <a href="#"><?=$article['category']?></a>
                                     </span>
                                 </div>
 

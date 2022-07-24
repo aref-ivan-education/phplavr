@@ -49,7 +49,7 @@
 
             <div class="s-header__logo">
                 <a class="logo" href="index.html">
-                    <img src="assets/images/logo.svg" alt="Homepage">
+                    <img src="/assets/images/logo.svg" alt="Homepage">
                 </a>
             </div>
 
@@ -114,7 +114,6 @@
 
     </header> <!-- end header -->
 <?if($err==""):?>
-    qweeeiuyeqiuyiqweu
     <section class="s-content s-content--single">
         <div class="row">
             <div class="column large-12">
@@ -149,52 +148,37 @@
                         </p>
 
                         <div class="s-content__author">
-                            <img src="images/avatars/user-06.jpg" alt="">
+                            <img src="/assets/images/avatars/user-06.jpg" alt="">
 
                             <div class="about">
                                 <h5><a href="#"><?=$users[$article['id_user']]['name']?></a></h5>
+
                             
-                                <p>Alias aperiam at debitis deserunt dignissimos dolorem doloribus, fuga fugiat impedit laudantium magni maxime nihil nisi quidem quisquam sed ullam voluptas voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                </p>
-
-                                <ul class="author-social">
-                                    <li><a href="#0">Facebook</a></li>
-                                    <li><a href="#0">Twitter</a></li>
-                                    <li><a href="#0">Dribbble</a></li>
-                                    <li><a href="#0">Instagram</i></a></li>
-                                </ul>
-                            </div>
-                        </div> <!-- end s-content__author -->
 
 
-                        <!-- <div class="s-content__pagenav group"> -->
-                            <!-- <div class="prev-nav">
-                                <a href="#" rel="prev">
-                                    <span>Previous</span>
-                                    Tips on Minimalist Design 
-                                </a>
-                            </div>
-                             <div class="next-nav">
-                                 <a href="#" rel="next">
-                                     <span>Next</span>
-                                    Less Is More 
-                                 </a>
-                             </div>
-                         </div> end s-content__pagenav -->
 
-                    </div> <!-- end s-content__primary -->
                 </article>
 
+
+
             </div> <!-- end column -->
+           
         </div> <!-- end row -->
 
 
 
 
+
     </section> <!-- end s-content -->
+    <div class="row">
+        <div class="column large-12">
+            <form>                    
+                <a class="btn btn--primary h-full-width" href="/c/c_edit.php?id_article=<?=$article['id_article']?>">Редактировать</a>
+            </form>
+        </div>
+    </div>
 <?else:?>
     <?=$err?>
-    2222
 <?endif?>
 <!-- footer
     ================================================== -->
