@@ -52,6 +52,13 @@
                     <img src="assets/images/logo.svg" alt="Homepage">
                 </a>
             </div>
+            <div>
+                <?if($isAuth):?>
+                    Привет, <?=$user_name?>
+                <?else:?>
+                    <a href="/c/c_auth.php">Войти</a>
+                <?endif?>
+            </div>
 
             <nav class="s-header__nav-wrap">
 
@@ -92,7 +99,7 @@
                    
             <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
             
-            <div class="s-header__search">
+            <!-- <div class="s-header__search">
                     
                 <form role="search" method="get" class="s-header__search-form" action="#">
                     <label>
@@ -104,7 +111,8 @@
 
                 <a href="#0" title="Close Search" class="s-header__overlay-close">Close</a>
 
-            </div> <!-- end search wrap -->	
+           </div> -->
+             <!-- end search wrap	 -->
 
             <a class="s-header__search-trigger" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 004.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0018 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
@@ -136,7 +144,7 @@
 
                                 <div class="entry__meta">
                                     <span class="entry__cat-links">
-                                        <a href="#"><?=$article['category']?></a>
+                                        <a href="#"><?=$article['category_name']?></a>
                                     </span>
                                 </div>
 

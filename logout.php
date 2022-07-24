@@ -8,7 +8,6 @@
         $_SESSION['loginRef']=$_SERVER['HTTP_REFERER'];
     }
     if(count($_POST) > 0){
-        echo 1;
         if(isset($_SESSION['is_auth'])){
             unset($_SESSION['is_auth']);
          }
