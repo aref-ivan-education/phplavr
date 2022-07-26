@@ -90,7 +90,7 @@
                     </li>
                     <li><a href="styles.html" title="">Styles</a></li>
                     <li><a href="about.html" title="">About</a></li>
-                    <li><a href="contact.html" title="">Contact</a></li>
+                    <li><a href="/c/c_add.php" title="">Добавить статью</a></li>
                 </ul> <!-- end header__nav -->
 
                 <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>

@@ -2,8 +2,8 @@
     
     include_once('../m/m_auth.php');
     include_once('../m/m_check.php');
+    include_once('../m/m_users.php');
 
-    // $users=get_users();
 
 
     session_start();
@@ -16,19 +16,18 @@
             $login=checkInput($_POST['login']);
             $password=checkInput($_POST['password']);
 
-            $user=get_user($login);
+            $user=get_user_by_login($login);
 
             
             if($user&& $password == $user['pass']){
                 $_SESSION['is_auth'] = true;
-                $_SESSION['userName']=$user['name'];			
+                $_SESSION['userName']=$user['name']??$user['login'];			
                 $_SESSION['userLogin']=$user['login'];
                 
                 if(isset($_POST['remember'])&&$_POST['remember']){
                     setcookie('login',$user['login'], time() + 3600 * 24 * 7, '/');
                     setcookie('pass',myhash($user['pass']), time() + 3600 * 24 * 7, '/');
                 }
-                // var_dump($_SESSION);
                 header('Location:'.$_SESSION['loginRef']);
                 unset($_SESSION['loginRef']);
                 exit();

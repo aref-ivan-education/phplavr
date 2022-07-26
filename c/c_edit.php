@@ -1,15 +1,17 @@
 <?
     include_once("../m/m_articles.php");
+    include_once('../m/m_categores.php');
+    include_once("../m/m_users.php");
     include_once("../m/m_check.php");
     include_once('../m/m_auth.php');
 
     $error="";
     $msg="";
-    $id_article = $_GET['id_article'] ?? null;
-
+    $id_article = $_GET['id_article'];
+ 
     $isAuth=isAuth();
     if($isAuth){
-        $user_name = $_SESSION['userName']??'anonim';
+        $user_name = $_SESSION['userName'];
     }
 
     if(!checkID($id_article)){
@@ -21,8 +23,7 @@
             $error = 'Ошибка 404. Нет такой статьи!';
         }
         else{
-            // $category = get_article_category($article)[0]??'';
-            $autor = get_article_autor($article)[0]??"";
+            $autor = get_article_autor($article['id_user'])[0]??"";
             $categores = get_article_categores();
         }
     }
@@ -38,7 +39,7 @@
         elseif(!checkTitle($titlePost)){
             $msg = "Название должно содержать только буквы, числа и знак '-'";
         }
-        elseif($titlePost==$article['title']&&$contentPost==$article['content']){
+        elseif($titlePost==$article['title']&&$contentPost==$article['content']&&$category==$article['id_cat']){
             $msg= 'Статья не изменена';
         }
         else{
@@ -49,9 +50,11 @@
                         'id_user'=>$autor,
                         'id_article'=>$id_article,  
             ]   ;
-            update_article($updateData);
-            header("Location: /c/c_post.php?id_article=".$id_article);
-			exit();
+
+        // var_dump($updateData);
+           update_article($updateData);
+           // header("Location: /c/c_post.php?id_article=".$id_article);
+			//exit();
         }
         
     }

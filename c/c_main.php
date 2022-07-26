@@ -1,6 +1,8 @@
-<?
-    include_once("m/m_articles.php");
+<?  
     include_once("m/m_main.php");
+    include_once("m/m_articles.php");
+    include_once("m/m_categores.php");
+    include_once("m/m_users.php");
     include_once('m/m_auth.php');
     $articles=get_article_all();
     

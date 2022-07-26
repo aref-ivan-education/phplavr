@@ -1,10 +1,22 @@
 <?
     include_once("../m/m_articles.php");
+	include_once("../m/m_categores.php");
+	include_once('../m/m_users.php');
     include_once("../m/m_check.php");
+    include_once('../m/m_auth.php');
+
+
+	$isAuth=isAuth();
+		if($isAuth){
+			$user_name = $_SESSION['userName'];
+		}
+	$categores = get_article_categores();
 
     if(count($_POST) > 0){
 		$title = checkInput($_POST['title']);
-		$content = checkInput($_POST['content']);
+		$content = checkInput($_POST['content']);			
+		$category = checkInput($_POST['category']);
+		$autor = checkInput(get_id_article_autor($user_name)[0]??'');
 		
 		if($title == '' || $content == ''){
 			$msg = 'Заполните все поля';
@@ -19,11 +31,15 @@
 
 
 		else{
+
 			$set=set_article(['title'=>$title,
-                        'content'=>$content]);
-            var_dump($set->rowCount());
-			// header("Location: index.php");
-			// exit();
+                        	'content'=>$content,
+							'id_cat'=>$category,
+							'id_user'=>$autor,
+							]);
+							
+			header("Location: /index.php");
+			exit();
 		}
 	}
 	else{

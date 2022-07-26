@@ -1,54 +1,6 @@
 <?
     include_once("m_db.php");
-
-    function get_article_all($order = "date DESC"){
-
-        $query = db_query("SELECT * FROM articles ORDER BY $order");
-
-	    return $query->fetchAll();
-    }
-    function get_article_categores(){
-        $query = db_query("SELECT * FROM categores  ");
-
-	    return $query->fetchAll();
-    }
-
-    function set_article($data){
-
-
-        $query=db_query("INSERT INTO articles (title, content) VALUES (:title, :content)", [
-            'title' => $data['title'],
-            'content' => $data['content']
-        ]);
-        return $query;
-    }
-
-    function update_article($data){
-        $query=db_query("UPDATE articles SET title = :title, content =:content ,id_cat = :id_cat ,id_user = :id_user WHERE id_article = :id_article", $data
-        );
-        return $query;
-    }
-
-    function get_article_category($article){
-        $query = db_query("SELECT name FROM categores WHERE id_cat=:id_cat",
-        ['id_cat'=>$article['id_cat']]);
-
-        return  $query->fetch();    
-    }
-
-    function get_article_autor($article){
-        $query = db_query("SELECT name FROM users WHERE id_user=:id_user",
-        ['id_user'=>$article['id_user']]);
-
-        return  $query->fetch();
-    }    
-    function get_id_article_autor($name){
-        $query = db_query("SELECT id_user FROM users WHERE name=:id_name",
-        ['id_name'=>$name]);
-
-        return $query->fetch();
-
-    }
+    // Получить новость
     function get_article($id_article){
 
         $query = db_query("SELECT * FROM `articles` WHERE id_article=:id",
@@ -56,9 +8,35 @@
 
 		return $query->fetch();
     }
-    
-  
-    
-    
+    // Получить все новости
+    function get_article_all($order = "date DESC"){
 
-?>
+        $query = db_query("SELECT * FROM articles ORDER BY $order");
+
+	    return $query->fetchAll();
+    }
+    // добавить новость
+    function set_article($data){
+
+        $query=db_query("INSERT INTO articles (title, content ,id_cat ,id_user) VALUES (:title, :content , :id_cat, :id_user)", $data);
+
+
+        $db = db_connect();
+		return $db->lastInsertId();
+    }
+    // Изменить новость
+    function update_article($data){
+            $key_mask=[];
+            $sql="";
+        foreach($data as $k=>$v){
+            if($k!='id_article'){
+                $key_mask[] = $k ." = :" . $k ;
+            }
+        }
+        $key_mask=implode(' , ',$key_mask);
+        $sql = "UPDATE articles SET " . $key_mask . " WHERE  id_article = :id_article";
+        echo $sql;
+        // var_dump($data);
+        $query=db_query($sql, $data);
+        return $query;
+    }

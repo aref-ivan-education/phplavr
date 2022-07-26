@@ -17,7 +17,7 @@
 
             <input type="submit" value="редактировать"><br>
 
-            <button><a href="index.php">Вернуться</a></button>
+            <!-- <button><a href="index.php">Вернуться</a></button> -->
             <?=$msg;?>
 
         </form>	
