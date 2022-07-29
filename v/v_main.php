@@ -5,7 +5,7 @@
     <!--- basic page needs
     ================================================== -->
     <meta charset="utf-8">
-    <title>Abstract</title>
+    <title><?=$title?></title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -48,38 +48,33 @@
         <div class="row s-header__content">
 
             <div class="s-header__logo">
-                <a class="logo" href="index.html">
+                <a class="logo" href="index.php">
                     <img src="assets/images/logo.svg" alt="Homepage">
                 </a>
             </div>
-            <div>
-                <?if($isAuth):?>
-                    Привет, <?=$user_name?>
-                <?else:?>
+            <!-- <div>
+                <?//if($isAuth):?>
+                    Привет, <?//=$user_name?>
+                <?//else:?>
                     <a href="/c/c_auth.php">Войти</a>
-                <?endif?>
-            </div>
+                <?//endif?>
+            </div> -->
 
             <nav class="s-header__nav-wrap">
 
                 <h2 class="s-header__nav-heading h6">Site Navigation</h2>
 
                 <ul class="s-header__nav">
-                    <li class="current"><a href="index.html" title="">Home</a></li>
+                    <li class="current"><a href="index.php" title="">Home</a></li>
                     <li class="has-children">
-                        <a href="#0" title="">Categories</a>
+                        <a href="#0" title="">Категории</a>
                         <ul class="sub-menu">
-                            <li><a href="category.html">Design</a></li>
-                            <li><a href="category.html">Lifestyle</a></li>
-                            <li><a href="category.html">Photography</a></li>
-                            <li><a href="category.html">Vacation</a></li>
-                            <li><a href="category.html">Work</a></li>
-                            <li><a href="category.html">Health</a></li>
-                            <li><a href="category.html">Family</a></li>
-                            <li><a href="category.html">Relationship</a></li>
+                            <?foreach($categores as $item):?>
+                                <li><a href="index.php?id=<?=$item['id_cat']?>"><?=$item['name']?></a></li>
+                            <?endforeach?>
                         </ul>
                     </li>
-                    <li class="has-children">
+                    <!-- <li class="has-children">
                         <a href="#0" title="">Blog</a>
                         <ul class="sub-menu">
                         <li><a href="single-video.html">Video Post</a></li>
@@ -87,10 +82,20 @@
                         <li><a href="single-gallery.html">Gallery Post</a></li>
                         <li><a href="single-standard.html">Standard Post</a></li>
                         </ul>
-                    </li>
-                    <li><a href="styles.html" title="">Styles</a></li>
-                    <li><a href="about.html" title="">About</a></li>
-                    <li><a href="/c/c_add.php" title="">Добавить статью</a></li>
+                    </li> -->
+                    <?if($isAuth):?>
+                        <!-- <li><a href="styles.html" title="">Styles</a></li> -->
+                        <li class="has-children">
+                            <a href="#0" title=""><?=$user_name?></a>
+                            <ul class="sub-menu">
+                                <li><a href="index.php?c=add" title="">Добавить статью</a></li>
+                                <li><a href="index.php?c=logout" title="">Выйти</a></li>
+
+                        </li>
+                    <?else:?>
+                        <li><a href="index.php?c=auth" title="">Войти</a></li>
+                    <?endif?>
+                    
                 </ul> <!-- end header__nav -->
 
                 <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
@@ -113,62 +118,22 @@
 
            </div> -->
              <!-- end search wrap	 -->
-
+<!-- 
             <a class="s-header__search-trigger" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 004.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0018 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"></path></svg>
-            </a>
+            </a> -->
 
         </div> <!-- end s-header__content -->
 
     </header> <!-- end header -->
 
-    <section class="s-bricks">
-
-        <div class="masonry">
-            <div class="bricks-wrapper h-group">
-
-                <div class="grid-sizer"></div>
-
-                <?foreach($articles as $article):?>
-                    <article class="brick entry format-standard animate-this">
-    
-                        <div class="entry__thumb">
-                            <a href="/c/c_post.php?id_article=<?=$article['id_article']?>" class="thumb-link">
-                                <img src="assets/images/thumbs/masonry/beetle-600.jpg" 
-                                    srcset="assets/images/thumbs/masonry/beetle-600.jpg 1x, assets/images/thumbs/masonry/beetle-1200.jpg 2x" alt="">
-                            </a>
-                        </div> <!-- end entry__thumb -->
-
-                        <div class="entry__text">
-                            <div class="entry__header">
-
-                                <div class="entry__meta">
-                                    <span class="entry__cat-links">
-                                        <a href="#"><?=$article['category_name']?></a>
-                                    </span>
-                                </div>
-
-                                <h1 class="entry__title"><a href="/c/c_post.php?id_article=<?=$article['id_article']?>"><?=$article['title']?></a></h1>
-                                
-                            </div>
-                            <div class="entry__excerpt">
-                                <p>
-                                <?=$article['excerpt']?>
-                                </p>
-                            </div>
-                        </div> <!-- end entry__text -->
-
-                    </article> <!-- end article -->
-                <?endforeach?>
 
 
-            </div> <!-- end brick-wrapper --> 
-        </div> <!-- end masonry -->
+    <?=$content?>
 
 
-    </section> <!-- end s-bricks -->
-    
-     <!-- footer
+
+         <!-- footer
     ================================================== -->
     <footer class="s-footer">
 
