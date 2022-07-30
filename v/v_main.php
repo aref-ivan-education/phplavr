@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="ru">
 <head>
 
     <!--- basic page needs
@@ -15,19 +15,19 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/vendor.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/vendor.css">
 
     <!-- script
     ================================================== -->
-    <script src="/assets/js/modernizr.js"></script>
+    <script src="/assets/css/styles.css"></script>
 
     <!-- favicons
     ================================================== -->
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="manifest" href="/assets/site.webmanifest">
 
 </head>
 
@@ -49,7 +49,7 @@
 
             <div class="s-header__logo">
                 <a class="logo" href="index.php">
-                    <img src="assets/images/logo.svg" alt="Homepage">
+                    <img src="/assets/images/logo.svg" alt="Homepage">
                 </a>
             </div>
             <!-- <div>
@@ -65,12 +65,12 @@
                 <h2 class="s-header__nav-heading h6">Site Navigation</h2>
 
                 <ul class="s-header__nav">
-                    <li class="current"><a href="index.php" title="">Home</a></li>
+                    <li class="current"><a href="/" title="">Home</a></li>
                     <li class="has-children">
                         <a href="#0" title="">Категории</a>
                         <ul class="sub-menu">
                             <?foreach($categores as $item):?>
-                                <li><a href="index.php?id=<?=$item['id_cat']?>"><?=$item['name']?></a></li>
+                                <li><a href="/categores/=<?=$item['id_cat']?>"><?=$item['name']?></a></li>
                             <?endforeach?>
                         </ul>
                     </li>
@@ -88,12 +88,12 @@
                         <li class="has-children">
                             <a href="#0" title=""><?=$user_name?></a>
                             <ul class="sub-menu">
-                                <li><a href="index.php?c=add" title="">Добавить статью</a></li>
-                                <li><a href="index.php?c=logout" title="">Выйти</a></li>
+                                <li><a href="/add" title="">Добавить статью</a></li>
+                                <li><a href="/logout" title="">Выйти</a></li>
 
                         </li>
                     <?else:?>
-                        <li><a href="index.php?c=auth" title="">Войти</a></li>
+                        <li><a href="/auth" title="">Войти</a></li>
                     <?endif?>
                     
                 </ul> <!-- end header__nav -->
@@ -228,9 +228,9 @@
 
    <!-- Java Script
    ================================================== -->
-   <script src="assets/js/jquery-3.2.1.min.js"></script>
-   <script src="assets/js/plugins.js"></script>
-   <script src="assets/js/main.js"></script>
+   <script src="/assets/js/jquery-3.2.1.min.js"></script>
+   <script src="/assets/js/plugins.js"></script>
+   <script src="/assets/js/main.js"></script>
 
 </body>
 

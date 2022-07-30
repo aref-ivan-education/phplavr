@@ -30,3 +30,11 @@
 		include "v/$filename.php";
 		return ob_get_clean();
 	}
+
+    function checkdata($data){
+        ob_start();
+        echo '<pre>'; 
+        var_dump($data);
+        echo '</pre>';
+        return ob_get_clean();
+    }

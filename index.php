@@ -6,18 +6,25 @@
     include_once('m/auth.php');
     include_once('m/check.php');
 
-    $categores=get_article_categores();
-    $isAuth=isAuth();
-    $user_name="";
+    $categores = get_article_categores();
+    $isAuth = isAuth();
+    $user_name = "";
+    $err404 = false;
+
+    $params = explode('/', $_GET['chpu']);
+	$end = count($params) - 1;
+	
+	if($params[$end] === ''){
+		unset($params[$end]);
+		$end--;
+	}
     if($isAuth){
         $user_name=$_SESSION['userName']??'anonim';
     }
 
+	$controller = trim($params[0]??'home');
 
-
-	$controller = $_GET['c'] ?? 'home';
-
-    $controller = checkInput($controller);
+    $controller = cleanInput($controller);
 
     if(file_exists("c/$controller.php")){
         include_once("c/$controller.php");

@@ -10,7 +10,7 @@
             return preg_match($regName,$title);
         }
 
-    function checkInput($text){
+    function cleanInput($text){
         return htmlspecialchars(stripcslashes(trim($text)));
     } 
     

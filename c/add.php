@@ -13,18 +13,15 @@
 	$categores = get_article_categores();
 
     if(count($_POST) > 0){
-		$title = checkInput($_POST['title']);
-		$content = checkInput($_POST['content']);			
-		$category = checkInput($_POST['category']);
-		$autor = checkInput(get_id_article_autor($user_name)[0]??'');
+		$title = cleanInput($_POST['title']);
+		$content = cleanInput($_POST['content']);			
+		$category = cleanInput($_POST['category']);
+		$autor = cleanInput(get_id_article_autor($user_name)[0]??'');
 		
 		if($title == '' || $content == ''){
 			$msg = 'Заполните все поля';
 		}
-		/*
-			проверка корректности title
-			проверка уникальности title
-		*/
+
 		elseif(!checkTitle($title)){
 			$msg = "Название должно содержать только буквы, числа и знак '-'";
 		}

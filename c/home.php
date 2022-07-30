@@ -5,7 +5,6 @@
     include_once("m/users.php");
     include_once('m/auth.php');
     $articles=get_article_all();
-    
     $categores=get_article_categores();
     $users=get_users();
     $articles=add_field_name_by_id($articles,$categores,'category_name','id_cat','name');

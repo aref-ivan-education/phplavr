@@ -3,7 +3,12 @@
     // Получить новость
     function get_article($id_article){
 
-        $query = db_query("SELECT * FROM `articles` WHERE id_article=:id",
+        $query = db_query("SELECT a.*,c.name as category, u.name as user
+                           FROM articles as a LEFT JOIN categores as c
+                           ON a.id_cat = c.id_cat
+                           LEFT JOIN users as u 
+                           ON a.id_user = u.id_user 
+                           WHERE id_article=:id",
 							['id'=>$id_article]);
 
 		return $query->fetch();
@@ -11,7 +16,13 @@
     // Получить все новости
     function get_article_all($order = "date DESC"){
 
-        $query = db_query("SELECT * FROM articles ORDER BY $order");
+        $query = db_query("SELECT a.*,c.name as category, u.name as user
+                           FROM articles as a LEFT JOIN categores as c
+                           ON a.id_cat = c.id_cat
+                           LEFT JOIN users as u 
+                           ON a.id_user = u.id_user
+                           ORDER BY $order");
+        // $query = db_query("SELECT * FROM articles ORDER BY $order");
 
 	    return $query->fetchAll();
     }
