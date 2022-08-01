@@ -24,7 +24,7 @@
     }
 
     // Получить id пользователя
-    function get_id_article_autor($name){
+    function get_id_user_by_name($name){
         $query = db_query("SELECT id_user FROM users WHERE name=:id_name",
         ['id_name'=>$name]);
 

@@ -1,16 +1,17 @@
 <?
-    include_once("m/articles.php");
-    include_once('m/categores.php');
-    include_once("m/users.php");
-    include_once("m/check.php");
-    include_once('m/auth.php');
-
+    // include_once("models/articles.php");
+    include_once('models/categores.php');
+    include_once("models/users.php");
+    include_once("models/check.php");
+    include_once('models/auth.php');
+use models\ArticleModel;
+$aModel = new ArticleModel($db);
     $msg="";
     $id_article = $params[1];
  
     $isAuth=isAuth();
 
-    if(checkID($id_article) && $article = get_article($id_article) ){
+    if(checkID($id_article) && $article = $aModel->getByID($id_article) ){
         $autor = $article['user']??"";
         $categores = get_article_categores();
 
@@ -38,7 +39,7 @@
                             'id_article'=>$id_article,  
                 ]   ;
     
-                update_article($updateData);
+                $aModel->update_article($updateData);
                 header("Location: /post/".$id_article);
                 exit();
             }

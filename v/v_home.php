@@ -20,7 +20,7 @@
 
                             <div class="entry__meta">
                                 <span class="entry__cat-links">
-                                    <a href="#"><?=$article['category_name']?></a>
+                                    <a href="#"><?=$article['category']?></a>
                                 </span>
                             </div>
 

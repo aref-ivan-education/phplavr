@@ -1,8 +1,8 @@
 <?
     
-    include_once('m/auth.php');
-    include_once('m/check.php');
-    include_once('m/users.php');
+    include_once('models/auth.php');
+    include_once('models/check.php');
+    include_once('models/users.php');
 
     $logOut = logOut();
     $msg = '';

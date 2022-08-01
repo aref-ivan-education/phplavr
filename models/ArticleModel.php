@@ -46,7 +46,7 @@ class ArticleModel extends BaseModel
 
         $this->db_query($sql, $data);
 
-		return $this->db->lastInsertId();
+		return $this->getDB()->lastInsertId();
     }
 
     public function update_article($data)
@@ -55,13 +55,13 @@ class ArticleModel extends BaseModel
         $idName = $this->getIdName();
         $key_mask=[];
         $sql="";
-        foreach($data as $k=>$v){
+        foreach(array_keys($data) as $k){
             if($k!='id_article'){
                 $key_mask[] = $k ." = :" . $k ;
             }
         }
         $key_mask=implode(' , ',$key_mask);
-        $sql = "UPDATE articles SET " . $key_mask . " WHERE  id_article = :id_article";
+        $sql = sprintf("UPDATE %s SET %s WHERE  %s = :%s",$table,$key_mask,$idName,$idName);
         $query=db_query($sql, $data);
         return $query;
         

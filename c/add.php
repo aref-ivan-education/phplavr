@@ -1,10 +1,12 @@
 <?
-    include_once("m/articles.php");
-	include_once("m/categores.php");
-	include_once('m/users.php');
-    include_once("m/check.php");
-    include_once('m/auth.php');
+    // include_once("models/articles.php");
+	include_once("models/categores.php");
+	include_once('models/users.php');
+    include_once("models/check.php");
+    include_once('models/auth.php');
 
+use models\ArticleModel;
+$aModel= new ArticleModel($db);
 
 	$isAuth=isAuth();
 		if($isAuth){
@@ -16,7 +18,7 @@
 		$title = cleanInput($_POST['title']);
 		$content = cleanInput($_POST['content']);			
 		$category = cleanInput($_POST['category']);
-		$autor = cleanInput(get_id_article_autor($user_name)[0]??'');
+		$autor = cleanInput(get_id_user_by_name($user_name)[0]??'');
 		
 		if($title == '' || $content == ''){
 			$msg = 'Заполните все поля';
@@ -29,13 +31,13 @@
 
 		else{
 
-			$set=set_article(['title'=>$title,
+			$set=$aModel->set_article(['title'=>$title,
                         	'content'=>$content,
 							'id_cat'=>$category,
 							'id_user'=>$autor,
 							]);
 							
-			header("Location: /index.php?c=post&id_article=".$set);
+			header("Location: /post/".$set);
 			exit();
 		}
 	}

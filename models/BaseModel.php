@@ -22,6 +22,10 @@ abstract class BaseModel
     {
         return $this->idName;
     }
+    public function getDB()
+    {
+        return $this->db;
+    }
 
     protected function db_query($sql, $params = [])
     {
