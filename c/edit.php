@@ -36,10 +36,10 @@ $aModel = new ArticleModel($db);
                             'content'=>$contentPost,
                             'id_cat'=>$category,
                             'id_user'=>$autor,
-                            'id_article'=>$id_article,  
+  
                 ]   ;
     
-                $aModel->update_article($updateData);
+                $aModel->updateByID($id_article, $updateData);
                 header("Location: /post/".$id_article);
                 exit();
             }

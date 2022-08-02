@@ -31,7 +31,7 @@ $aModel= new ArticleModel($db);
 
 		else{
 
-			$set=$aModel->set_article(['title'=>$title,
+			$set=$aModel->add(['title'=>$title,
                         	'content'=>$content,
 							'id_cat'=>$category,
 							'id_user'=>$autor,

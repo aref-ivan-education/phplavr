@@ -16,7 +16,7 @@ class ArticleModel extends BaseModel
                         LEFT JOIN categores as c ON a.id_cat = c.id_cat 
                         LEFT JOIN users as u ON a.id_user = u.id_user',
                         $table);
-        $query = $this->db_query($sql);
+        $query = $this->dbQuery($sql);
 
 	    return $query->fetchAll();
     }
@@ -30,40 +30,40 @@ class ArticleModel extends BaseModel
                         LEFT JOIN users as u ON a.id_user = u.id_user 
                         WHERE %s = :id',
                         $table,$idName);
-        $query = $this->db_query($sql,['id' => $id]);
+        $query = $this->dbQuery($sql,['id' => $id]);
 
         return $query->fetch();
         
 
     }
 
-    public function set_article($data)
+    public function setArticle($data)
     {
         $table = $this->getTable();
         $sql = sprintf('INSERT INTO %s (title, content ,id_cat ,id_user) 
                         VALUES (:title, :content , :id_cat, :id_user)',$table);
 
 
-        $this->db_query($sql, $data);
+        $this->dbQuery($sql, $data);
 
 		return $this->getDB()->lastInsertId();
     }
 
-    public function update_article($data)
-    {
-        $table = $this->getTable();
-        $idName = $this->getIdName();
-        $key_mask=[];
-        $sql="";
-        foreach(array_keys($data) as $k){
-            if($k!='id_article'){
-                $key_mask[] = $k ." = :" . $k ;
-            }
-        }
-        $key_mask=implode(' , ',$key_mask);
-        $sql = sprintf("UPDATE %s SET %s WHERE  %s = :%s",$table,$key_mask,$idName,$idName);
-        $query=db_query($sql, $data);
-        return $query;
+    // public function updateArticle($data)
+    // {
+    //     $table = $this->getTable();
+    //     $idName = $this->getIdName();
+    //     $key_mask=[];
+    //     $sql="";
+    //     foreach(array_keys($data) as $k){
+    //         if($k!='id_article'){
+    //             $key_mask[] = $k ." = :" . $k ;
+    //         }
+    //     }
+    //     $key_mask=implode(' , ',$key_mask);
+    //     $sql = sprintf("UPDATE %s SET %s WHERE  %s = :%s",$table,$key_mask,$idName,$idName);
+    //     $query=db_query($sql, $data);
+    //     return $query;
         
-    }
+    // }
 }
