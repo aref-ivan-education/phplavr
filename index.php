@@ -7,6 +7,8 @@
     include_once('models/check.php');
     use core\DB;
     use models\UserModel;
+   
+    
 
     function __autoload($classname) {
         include_once __DIR__ . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.php';
@@ -27,33 +29,53 @@
 		unset($params[$end]);
 		$end--;
 	}
+
     if($isAuth){
         $uModel = new UserModel($db);
         $user = $uModel->getByLogin($_SESSION['userLogin']);
-
     }
 
-	$controller = trim($params[0]??'home');
-
+	$controller = trim($params[0]??"article");
     $controller = cleanInput($controller);
 
-    if(file_exists("c/$controller.php")){
-        include_once("c/$controller.php");
+    $action = isset($params[1]) && checkAction($params[1]) ? $params[1] : 'index';
+    $action = sprintf('%sAction', $action);
+
+    $id = isset($params[2]) && checkID($params[2])? $params[2] : false;
+
+    // var_dump($controller);
+    // die;        
+    switch ($controller) {
+        case 'article':
+            $controller = 'Article';
+            break;
+        case 'user':
+            $controller = 'User';
+            break;
+        
+        default:
+            $controller = "Base";
+            $action = "error404";
+            break;
     }
-    else{
-        $title="Ошибка 404";
-        $inner= template('v_404',[]);
-    }
+
+    $controller = sprintf('controllers\%sController', $controller);
+    $controller = new $controller();
+    $controller->setId($id);
+    $controller->$action();
+    $controller->render();
+
+
 
 
     
-    echo template('v_main', [
+    // echo template('v_main', [
 
-		'title' => $title,
-        'categores'=>$categores,
-        'user_name'=>$user['name']??"",
-        'isAuth'=>$isAuth,
-		'content' => $inner
-	]);
+	// 	'title' => $title,
+    //     'categores'=>$categores,
+    //     'user_name'=>$user['name']??"",
+    //     'isAuth'=>$isAuth,
+	// 	'content' => $inner
+	// ]);
 ?>
 

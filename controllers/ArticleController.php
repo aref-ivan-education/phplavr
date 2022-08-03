@@ -1,5 +1,5 @@
 <?
-namespace controller;
+namespace controllers;
 
 use core\DB;
 use models\ArticleModel;
@@ -12,6 +12,6 @@ class ArticleController extends BaseController
         $mArticle = new ArticleModel(Db::connect());
         $articles = $mArticle->getAll();
 
-        $this->content = $this->build('v_home',["articles"=>$articles]);
+        $this->content = $this->build(__DIR__ . '/../v/v_home.php',["articles"=>$articles]);
     }
 }

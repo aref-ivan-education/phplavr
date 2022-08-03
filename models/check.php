@@ -9,6 +9,11 @@
             $regName="#^[a-zA-Z0-9а-яА-Я-\s]+$#u";
             return preg_match($regName,$title);
         }
+    function checkAction($action){
+        $regName="#^[a-zA-Z]+$#";
+        return preg_match($regName,$action);
+
+    }
 
     function cleanInput($text){
         return htmlspecialchars(stripcslashes(trim($text)));
