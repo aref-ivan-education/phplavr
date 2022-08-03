@@ -7,9 +7,7 @@
     }
 
     function isAuth(){
-        if(!isset($_SESSION)){
-            session_start();
-        }
+
         $isAuth=FALSE;
 
         if(isset($_SESSION['is_auth']) && $_SESSION['is_auth']){ 
@@ -39,6 +37,8 @@
     function logOut(){
         if(isset($_SESSION['is_auth'])){
             unset($_SESSION['is_auth']);
+            unset($_SESSION['userName']);
+            unset($_SESSION['userLogin']);
         }
         if(isset($_COOKIE['login'])){
             setcookie('login','', 1, '/');

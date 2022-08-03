@@ -4,6 +4,7 @@
     include_once('models/check.php');
     include_once('models/users.php');
 
+    
     $logOut = logOut();
     $msg = '';
     if( $logOut ){
@@ -42,7 +43,7 @@
             $_SESSION['loginRef'] = $_SERVER['HTTP_REFERER']??"/";
         }
     }  
-
+    var_dump($_SESSION);
     $inner = template('v_auth',[
         'loginRef' => $_SESSION['loginRef'],
         'msg' => $msg

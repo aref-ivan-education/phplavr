@@ -1,17 +1,16 @@
 <?
     // include_once("models/articles.php");
 	include_once("models/categores.php");
-	include_once('models/users.php');
+	// include_once('models/users.php');
     include_once("models/check.php");
     include_once('models/auth.php');
 
 use models\ArticleModel;
-$aModel= new ArticleModel($db);
+use models\UserModel;
+$aModel = new ArticleModel($db);
+$uModel = new UserModel($db); 
 
-	$isAuth=isAuth();
-		if($isAuth){
-			$user_name = $_SESSION['userName'];
-		}
+
 	$categores = get_article_categores();
 
     if(count($_POST) > 0){

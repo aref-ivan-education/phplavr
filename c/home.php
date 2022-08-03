@@ -14,8 +14,8 @@
     // $articles=get_article_all();
     $articles=$aModel->getAll();
     // var_dump($articles);
-    $categores=get_article_categores();
-    $users=get_users();
+    // $categores=get_article_categores();
+    // $users=get_users();
     // $articles=add_field_name_by_id($articles,$categores,'category_name','id_cat','name');
     // $articles=add_field_name_by_id($articles,$users,'autor','id_user','name');
     $inner = template('v_home',[

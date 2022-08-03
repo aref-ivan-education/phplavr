@@ -2,34 +2,35 @@
     include_once("models/main.php");
     // include_once("models/articles.php");
     include_once("models/categores.php");
-    include_once("models/users.php");
+    // include_once("models/users.php");
     include_once('models/auth.php');
     include_once('models/check.php');
     use core\DB;
-    
+    use models\UserModel;
 
     function __autoload($classname) {
         include_once __DIR__ . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.php';
     }
-
+    // Включаем сессию
+    session_start();
+    // Подключение к базе данных
     $db = DB::connect();
-
-    
-
-    $categores = get_article_categores();
+    // Проверка на авторизацию
     $isAuth = isAuth();
-    $user_name = "";
+    $categores = get_article_categores();
+    // $user_name = "";
     $err404 = false;
-
+    // Получение адреса
     $params = explode('/', $_GET['chpu']);
 	$end = count($params) - 1;
-	
 	if($params[$end] === ''){
 		unset($params[$end]);
 		$end--;
 	}
     if($isAuth){
-        $user_name=$_SESSION['userName']??'anonim';
+        $uModel = new UserModel($db);
+        $user = $uModel->getByLogin($_SESSION['userLogin']);
+
     }
 
 	$controller = trim($params[0]??'home');
@@ -50,7 +51,7 @@
 
 		'title' => $title,
         'categores'=>$categores,
-        'user_name'=>$user_name,
+        'user_name'=>$user['name']??"",
         'isAuth'=>$isAuth,
 		'content' => $inner
 	]);

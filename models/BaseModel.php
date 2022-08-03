@@ -31,10 +31,8 @@ abstract class BaseModel
     {
         $db = $this->db;
         $query = $db->prepare($sql);
-        $query->execute($params);
-        
-        $this->dbCheckError($query);
-        
+        $query->execute($params);       
+        $this->dbCheckError($query);     
         return $query;
 
     }
@@ -81,6 +79,7 @@ abstract class BaseModel
         );
         $data[$idName]= $id;
         $sql = sprintf('UPDATE %1$s SET %2$s WHERE  %3$s = :%3$s',$table,$keyMask,$idName);
+        var_dump($sql);
         $query=db_query($sql, $data);
         return $query;
         
@@ -94,8 +93,6 @@ abstract class BaseModel
         $this->dbQuery($sql, $data);
 
 		return $this->getDB()->lastInsertId();
-
-        
 
     }
 
