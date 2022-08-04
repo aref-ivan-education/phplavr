@@ -1,12 +1,13 @@
 <? 
-    include_once("models/main.php");
+    // include_once("models/main.php");
     // include_once("models/articles.php");
-    include_once("models/categores.php");
+    // include_once("models/categores.php");
     // include_once("models/users.php");
-    include_once('models/auth.php');
-    include_once('models/check.php');
+    include_once('mFuncOld/auth.php');
+    // include_once('mFuncOld/check.php');
     use core\DB;
     use models\UserModel;
+    use core\Check;
    
     
 
@@ -19,9 +20,9 @@
     $db = DB::connect();
     // Проверка на авторизацию
     $isAuth = isAuth();
-    $categores = get_article_categores();
+    // $categores = get_article_categores();
     // $user_name = "";
-    $err404 = false;
+    // $err404 = false;
     // Получение адреса
     $params = explode('/', $_GET['chpu']);
 	$end = count($params) - 1;
@@ -35,18 +36,22 @@
         $user = $uModel->getByLogin($_SESSION['userLogin']);
     }
 
-	$controller = trim($params[0]??"article");
-    $controller = cleanInput($controller);
+	$controller = trim($params[0]??"articles");
+    $controller = Check::cleanInput($controller);
 
-    $action = isset($params[1]) && checkAction($params[1]) ? $params[1] : 'index';
+    $action = $params[1]??'index';
+    $action = Check::cleanInput($action);
     $action = sprintf('%sAction', $action);
 
-    $id = isset($params[2]) && checkID($params[2])? $params[2] : false;
+    $id = isset($params[2]) && Check::id($params[2])? $params[2] : false;
+    $id = Check::cleanInput($id);
+
+
 
     // var_dump($controller);
     // die;        
     switch ($controller) {
-        case 'article':
+        case 'articles':
             $controller = 'Article';
             break;
         case 'user':
@@ -61,6 +66,7 @@
 
     $controller = sprintf('controllers\%sController', $controller);
     $controller = new $controller();
+    $action = (method_exists($controller,$action))?$action : 'error404';
     $controller->setId($id);
     $controller->$action();
     $controller->render();

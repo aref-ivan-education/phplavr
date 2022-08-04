@@ -49,21 +49,5 @@ class ArticleModel extends BaseModel
 		return $this->getDB()->lastInsertId();
     }
 
-    // public function updateArticle($data)
-    // {
-    //     $table = $this->getTable();
-    //     $idName = $this->getIdName();
-    //     $key_mask=[];
-    //     $sql="";
-    //     foreach(array_keys($data) as $k){
-    //         if($k!='id_article'){
-    //             $key_mask[] = $k ." = :" . $k ;
-    //         }
-    //     }
-    //     $key_mask=implode(' , ',$key_mask);
-    //     $sql = sprintf("UPDATE %s SET %s WHERE  %s = :%s",$table,$key_mask,$idName,$idName);
-    //     $query=db_query($sql, $data);
-    //     return $query;
-        
-    // }
+
 }

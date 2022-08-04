@@ -9,10 +9,13 @@
             $regName="#^[a-zA-Z0-9а-яА-Я-\s]+$#u";
             return preg_match($regName,$title);
         }
-    function checkAction($action){
+    function IsString($var){
         $regName="#^[a-zA-Z]+$#";
-        return preg_match($regName,$action);
+        return preg_match($regName,$var);
 
+    }
+    function checkMetod($metod,$class){
+        return method_exists($class,$metod);
     }
 
     function cleanInput($text){

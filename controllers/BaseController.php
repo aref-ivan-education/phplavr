@@ -1,11 +1,15 @@
 <?php
 namespace controllers;
 
+use core\DB;
+use models\CategoryModel;
+use models\UserModel;
+
 class BaseController
 {
     protected $title;
     protected $content;
-	private $id;
+	protected $id;
     public function __construct()
 	{
 		$this->title = 'Новости';
@@ -20,11 +24,14 @@ class BaseController
 
     public function render()
 	{
+		$mCategory = new CategoryModel(DB::connect());
+		$caterores = $mCategory->getAll();
 		echo $this->build(
 				__DIR__ . '/../v/v_main.php',
 				[
 					'title' => $this->title,
-					'content' => $this->content
+					'content' => $this->content,
+					'categores' => $caterores
 				]
 			 );
 	}
@@ -40,7 +47,7 @@ class BaseController
     }
 	public function setID($id)
 	{
-		$this->$id = $id;
+		$this->id = $id;
 	}
 
 }
