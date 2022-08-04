@@ -3,7 +3,7 @@ namespace models;
 
 class UserModel extends BaseModel
 {
-    private $isAuth = false;
+    public $isAuth = false;
 
     private $hash = "4fgdhd43s9";
     public function __construct(\PDO $db)
@@ -40,7 +40,7 @@ class UserModel extends BaseModel
          return $this->isAuth;
     } 
 
-    private function myHash($str)
+    public function myHash($str)
     {
         return hash('sha256', sprintf('%s%s',$str,$this->hash));
     }

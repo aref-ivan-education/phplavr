@@ -48,17 +48,10 @@
         <div class="row s-header__content">
 
             <div class="s-header__logo">
-                <a class="logo" href="index.php">
+                <a class="logo" href="/">
                     <img src="/assets/images/logo.svg" alt="Homepage">
                 </a>
             </div>
-            <!-- <div>
-                <?//if($isAuth):?>
-                    Привет, <?//=$user_name?>
-                <?//else:?>
-                    <a href="/c/c_auth.php">Войти</a>
-                <?//endif?>
-            </div> -->
 
             <nav class="s-header__nav-wrap">
 
@@ -74,26 +67,17 @@
                             <?endforeach?>
                         </ul>
                     </li>
-                    <!-- <li class="has-children">
-                        <a href="#0" title="">Blog</a>
-                        <ul class="sub-menu">
-                        <li><a href="single-video.html">Video Post</a></li>
-                        <li><a href="single-audio.html">Audio Post</a></li>
-                        <li><a href="single-gallery.html">Gallery Post</a></li>
-                        <li><a href="single-standard.html">Standard Post</a></li>
-                        </ul>
-                    </li> -->
+
                     <?if($isAuth):?>
-                        <!-- <li><a href="styles.html" title="">Styles</a></li> -->
                         <li class="has-children">
-                            <a href="#0" title=""><?=$user_name?></a>
+                            <a href="#0" title=""><?=$userName?></a>
                             <ul class="sub-menu">
-                                <li><a href="/add" title="">Добавить статью</a></li>
-                                <li><a href="/logout" title="">Выйти</a></li>
+                                <li><a href="/articles/add" title="">Добавить статью</a></li>
+                                <li><a href="/users/logout" title="">Выйти</a></li>
 
                         </li>
                     <?else:?>
-                        <li><a href="/auth" title="">Войти</a></li>
+                        <li><a href="/users/auth" title="">Войти</a></li>
                     <?endif?>
                     
                 </ul> <!-- end header__nav -->

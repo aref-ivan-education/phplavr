@@ -3,8 +3,9 @@
     // include_once("models/articles.php");
     // include_once("models/categores.php");
     // include_once("models/users.php");
-    include_once('mFuncOld/auth.php');
+    // include_once('mFuncOld/auth.php');
     // include_once('mFuncOld/check.php');
+ 
     use core\DB;
     use models\UserModel;
     use core\Check;
@@ -18,11 +19,9 @@
     session_start();
     // Подключение к базе данных
     $db = DB::connect();
-    // Проверка на авторизацию
-    $isAuth = isAuth();
-    // $categores = get_article_categores();
-    // $user_name = "";
-    // $err404 = false;
+
+
+
     // Получение адреса
     $params = explode('/', $_GET['chpu']);
 	$end = count($params) - 1;
@@ -31,10 +30,9 @@
 		$end--;
 	}
 
-    if($isAuth){
-        $uModel = new UserModel($db);
-        $user = $uModel->getByLogin($_SESSION['userLogin']);
-    }
+    $uModel = new UserModel($db);
+    $uModel->isAuth();
+
 
 	$controller = trim($params[0]??"articles");
     $controller = Check::cleanInput($controller);
@@ -54,7 +52,7 @@
         case 'articles':
             $controller = 'Article';
             break;
-        case 'user':
+        case 'users':
             $controller = 'User';
             break;
         
@@ -65,9 +63,18 @@
     }
 
     $controller = sprintf('controllers\%sController', $controller);
+
     $controller = new $controller();
+
     $action = (method_exists($controller,$action))?$action : 'error404';
     $controller->setId($id);
+    if($uModel->isAuth){
+        $userName = $uModel->getByLogin($_SESSION['userLogin'])['name'];
+
+        $controller->setUserName($userName);
+        $controller->setIsAuth($uModel->isAuth);
+    }
+    
     $controller->$action();
     $controller->render();
 

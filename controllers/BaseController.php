@@ -10,6 +10,9 @@ class BaseController
     protected $title;
     protected $content;
 	protected $id;
+	protected $userName;
+	protected $isAuth;
+
     public function __construct()
 	{
 		$this->title = 'Новости';
@@ -31,7 +34,9 @@ class BaseController
 				[
 					'title' => $this->title,
 					'content' => $this->content,
-					'categores' => $caterores
+					'categores' => $caterores,
+					'userName' => $this->userName,
+					'isAuth' => $this->isAuth
 				]
 			 );
 	}
@@ -45,9 +50,19 @@ class BaseController
 
 		return ob_get_clean();
     }
+
 	public function setID($id)
 	{
 		$this->id = $id;
 	}
+	public function setUserName($userName)
+	{
+		$this->userName = $userName;
+	}
+	public function setIsAuth($isAuth)
+	{
+		$this->isAuth = $isAuth;
+	}
+
 
 }
