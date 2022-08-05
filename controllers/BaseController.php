@@ -12,17 +12,21 @@ class BaseController
 	protected $id;
 	protected $userName;
 	protected $isAuth;
+	protected $msg404;
 
     public function __construct()
 	{
 		$this->title = 'Новости';
 		$this->content = '';
+		$this->msg404 = "Страница не найдена";
 	}
 
 	public function error404()
 	{
+		
 		$this->title = "Страница не найдена";
-		$this->content = $this->build(__DIR__.'/../v/v_404.php');
+		header("HTTP/1.0 404 Not Found");
+		$this->content = $this->build(__DIR__.'/../v/v_404.php',['msg' =>$this->msg404]);
 	}
 
     public function render()

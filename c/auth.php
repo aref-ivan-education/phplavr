@@ -43,11 +43,10 @@
             $_SESSION['loginRef'] = $_SERVER['HTTP_REFERER']??"/";
         }
     }  
-    var_dump($_SESSION);
     $inner = template('v_auth',[
         'loginRef' => $_SESSION['loginRef'],
         'msg' => $msg
-    ]);
+        ]);
 
     $title = "Авторизация";
      

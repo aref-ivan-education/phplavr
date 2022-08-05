@@ -1,17 +1,8 @@
 <? 
-    // include_once("models/main.php");
-    // include_once("models/articles.php");
-    // include_once("models/categores.php");
-    // include_once("models/users.php");
-    // include_once('mFuncOld/auth.php');
-    // include_once('mFuncOld/check.php');
- 
     use core\DB;
     use models\UserModel;
-    use core\Check;
-   
-    
-
+    use core\Check;   
+    // автозагрузка классов(надо изменить на новую)
     function __autoload($classname) {
         include_once __DIR__ . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.php';
     }
@@ -20,8 +11,6 @@
     // Подключение к базе данных
     $db = DB::connect();
 
-
-
     // Получение адреса
     $params = explode('/', $_GET['chpu']);
 	$end = count($params) - 1;
@@ -29,7 +18,7 @@
 		unset($params[$end]);
 		$end--;
 	}
-
+    // Подключаем модель пользователей. Смотрим авторизацию
     $uModel = new UserModel($db);
     $uModel->isAuth();
 
@@ -43,11 +32,7 @@
 
     $id = isset($params[2]) && Check::id($params[2])? $params[2] : false;
     $id = Check::cleanInput($id);
-
-
-
-    // var_dump($controller);
-    // die;        
+   
     switch ($controller) {
         case 'articles':
             $controller = 'Article';
@@ -65,8 +50,8 @@
     $controller = sprintf('controllers\%sController', $controller);
 
     $controller = new $controller();
-
     $action = (method_exists($controller,$action))?$action : 'error404';
+
     $controller->setId($id);
     if($uModel->isAuth){
         $userName = $uModel->getByLogin($_SESSION['userLogin'])['name'];
@@ -78,17 +63,5 @@
     $controller->$action();
     $controller->render();
 
-
-
-
-    
-    // echo template('v_main', [
-
-	// 	'title' => $title,
-    //     'categores'=>$categores,
-    //     'user_name'=>$user['name']??"",
-    //     'isAuth'=>$isAuth,
-	// 	'content' => $inner
-	// ]);
 ?>
 

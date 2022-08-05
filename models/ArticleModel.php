@@ -14,7 +14,9 @@ class ArticleModel extends BaseModel
         $table = $this->getTable(); 
         $sql = sprintf('SELECT a.*,c.name as category, u.name as user FROM %s as a 
                         LEFT JOIN categores as c ON a.id_cat = c.id_cat 
-                        LEFT JOIN users as u ON a.id_user = u.id_user',
+                        LEFT JOIN users as u ON a.id_user = u.id_user
+                        ORDER by a.date DESC'
+                        ,
                         $table);
         $query = $this->dbQuery($sql);
 
