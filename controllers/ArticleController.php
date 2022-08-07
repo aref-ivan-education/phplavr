@@ -3,6 +3,7 @@ namespace controllers;
 
 use core\DB;
 use core\Check;
+use core\Request;
 use models\ArticleModel;
 use models\CategoryModel;
 use models\UserModel;
@@ -11,22 +12,23 @@ class ArticleController extends BaseController
 {
     public function indexAction()
     {
-        $mArticle = new ArticleModel(DB::connect());
+        $mArticle = new ArticleModel(DB::getConnect());
         $articles = $mArticle->getAll();
 
-        $this->content = $this->build(__DIR__ . '/../v/v_home.php',["articles"=>$articles]);
+        $this->content = $this->build('v_home',["articles"=>$articles]);
     }
 
     public function postAction($msg = "")
     {
-        $mArticle = new ArticleModel(DB::connect());
-        if($article = $mArticle->getByID($this->id))
+        $mArticle = new ArticleModel(DB::getConnect());
+        $id=$this->request->get('get','id');
+        if($article = $mArticle->getByID($id))
         {
             $this->content = $this->build(
-                                        __DIR__ . '/../v/v_post.php',
+                                        'v_post',
                                         [
                                         'article' => $article,
-                                        'isAuth' => $this->isAuth,
+                                        'isAuth' => $this->request->get('session','isAuth'),
                                         'msg'=> $msg
                                         ]
                                         );
@@ -41,18 +43,19 @@ class ArticleController extends BaseController
 
     public function addAction()
     {
-        $aModel = new ArticleModel(DB::connect());
-        // $uModel = new UserModel(DB::connect());
-        $catModel = new CategoryModel(DB::connect());
+        $aModel = new ArticleModel(DB::getConnect());
+        // $uModel = new UserModel(DB::getConnect());
+        $catModel = new CategoryModel(DB::getConnect());
         
         $categores = $catModel->getAll();
 
-        if(count($_POST) > 0)
+        if($this->request->isPost())
         {
-            $title = Check::cleanInput($_POST['title']);
-            $content = Check::cleanInput($_POST['content']);			
-            $category = Check::cleanInput($_POST['category']);
-            $autor = $this->userName;
+            $title = Check::cleanInput($this->request->get('post','title'));
+            $content = Check::cleanInput($this->request->get('post','content'));			
+            $category = Check::cleanInput($this->request->get('post','category'));
+            $autor = $this->request->get('session','userId');
+            
             
             if($title == '' || $content == '')
             {
@@ -91,7 +94,7 @@ class ArticleController extends BaseController
             $msg = '';
         }
 
-        $this->content = $this->build(__DIR__ . '/../v/v_post_add.php',
+        $this->content = $this->build(__DIR__ . 'post_add',
                                     [
                                     'title'=>$title,
                                     'content'=>$content,
@@ -104,18 +107,19 @@ class ArticleController extends BaseController
 
     public function editAction()
     {
-        $aModel = new ArticleModel(DB::connect());
-        $catModel = new CategoryModel(DB::connect());
+        $aModel = new ArticleModel(DB::getConnect());
+        $catModel = new CategoryModel(DB::getConnect());
         $msg="";
-
-        if($article = $aModel->getByID($this->id) ){
+        $id = $this->request->get('get',"id");
+        if($article = $aModel->getByID($id) ){
             $autor = $article['user']??"";
             $categores = $catModel->getAll();
     
-            if(count($_POST) > 0){
-                $titlePost = Check::cleanInput($_POST['title']);
-                $contentPost = Check::cleanInput($_POST['content']);
-                $category = Check::cleanInput($_POST['category']);
+            if($this->request->isPost())
+            {
+                $titlePost = Check::cleanInput($this->request->get('post','title'));
+                $contentPost = Check::cleanInput($this->request->get('post','content'));
+                $category = Check::cleanInput($this->request->get('post','category'));
         
                 if($titlePost == '' || $contentPost == '')
                 {
@@ -147,20 +151,20 @@ class ArticleController extends BaseController
       
                     ]   ;
         
-                    $aModel->updateByID($this->id , $updateData);
-                    header("Location: /articles/post/".$this->id);
+                    $aModel->updateByID($id , $updateData);
+                    header("Location: /articles/post/".$id);
                     exit();
                 }
                 
             }
     
             $this->content = $this->build(
-                            __DIR__. "/../v/v_post_edit.php",
+                             "v_post_edit",
                             [
                             'article' => $article,
                             'categores' => $categores,
                             'msg' => $msg,
-                            'isAuth' => $this->isAuth   
+                            'isAuth' => $this->request->get('session','isAuth')  
                             ]) ;        
             $this->title = "Редактирование статьи : " . $article['title'] ;
         }
@@ -174,11 +178,11 @@ class ArticleController extends BaseController
 
     public function deleteAction()
     {
-        $aModel = new ArticleModel(DB::connect());
-
-        if($aModel->getByID($this->id))
+        $aModel = new ArticleModel(DB::getConnect());
+        $id = $this->request->get('get','id');
+        if($aModel->getByID($id))
         {
-            $aModel->deleteByID($this->id);
+            $aModel->deleteByID($id);
             header('Location: /');
 
         }

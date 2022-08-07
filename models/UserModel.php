@@ -13,14 +13,15 @@ class UserModel extends BaseModel
     public function getByLogin($login)
     {
         $table = $this->getTable();
-        $sql = sprintf('SELECT * FROM %s WHERE `login` = :id', $table);
-        $query = $this->dbQuery($sql,['id'=>$login]);
+        $sql = sprintf('SELECT * FROM %s WHERE `login` = :login', $table);
+        $query = $this->dbQuery($sql,['login'=>$login]);
 
 	    return $query->fetch();
     }
+
     public function isAuth()
     {
-        if(isset($_SESSION['is_auth']) && $_SESSION['is_auth']){ 
+        if(isset($_SESSION['isAuth']) && $_SESSION['isAuth']){ 
             $this->isAuth = TRUE;
    
          }
@@ -30,9 +31,10 @@ class UserModel extends BaseModel
                  if($user){
                      if(isset($_COOKIE['pass']) && $_COOKIE['pass'] == $this->myHash($user['pass'])){  
                          $this->isAuth=TRUE;
-                         $_SESSION['is_auth'] = true;
+                         $_SESSION['isAuth'] = true;
                          $_SESSION['userName']=$user['name']??$user['login'];			
                          $_SESSION['userLogin']=$user['login'];	
+                         $_SESSION['userId'] = $user['id_user'];
                      }
                  }         
          }
@@ -46,10 +48,11 @@ class UserModel extends BaseModel
     }
     public function logOut()
     {
-        if(isset($_SESSION['is_auth'])){
-            unset($_SESSION['is_auth']);
+        if(isset($_SESSION['isAuth'])){
+            unset($_SESSION['isAuth']);
             unset($_SESSION['userName']);
             unset($_SESSION['userLogin']);
+            unset($_SESSION['id']);
         }
         if(isset($_COOKIE['login'])){
             setcookie('login','', 1, '/');
@@ -57,6 +60,6 @@ class UserModel extends BaseModel
         if(isset($_COOKIE['pass'])){
             setcookie('pass','', 1, '/');
         }
-        return !(isset($_SESSION['is_auth'])&&isset($_COOKIE['login'])&&isset($_COOKIE['pass']));
+        return !(isset($_SESSION['isAuth'])&&isset($_COOKIE['login'])&&isset($_COOKIE['pass']));
     }
 }

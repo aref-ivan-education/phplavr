@@ -79,7 +79,6 @@ abstract class BaseModel
         );
         $data[$idName]= $id;
         $sql = sprintf('UPDATE %1$s SET %2$s WHERE  %3$s = :%3$s',$table,$keyMask,$idName);
-        // var_dump($sql);
         $query=$this->dbQuery($sql, $data);
         return $query;
         

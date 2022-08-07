@@ -48,10 +48,10 @@
 <?if($isAuth):?>
     <div class="row">
         <div class="column large-4 align-center">                   
-            <a class="btn btn--primary h-full-width" href="/articles/edit/<?=$article['id_article']?>">Редактировать</a>
+            <a class="btn btn--primary h-full-width" href="/article/edit/<?=$article['id_article']?>">Редактировать</a>
         </div>
         <div class="column large-4 align-center">                   
-            <a class="btn btn--primary h-full-width" href="/articles/delete/<?=$article['id_article']?>">Удалить</a>
+            <a class="btn btn--primary h-full-width" href="/article/delete/<?=$article['id_article']?>">Удалить</a>
         </div>
     </div>
 <?endif?>

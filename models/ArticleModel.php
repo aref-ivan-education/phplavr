@@ -39,17 +39,5 @@ class ArticleModel extends BaseModel
 
     }
 
-    public function setArticle($data)
-    {
-        $table = $this->getTable();
-        $sql = sprintf('INSERT INTO %s (title, content ,id_cat ,id_user) 
-                        VALUES (:title, :content , :id_cat, :id_user)',$table);
-
-
-        $this->dbQuery($sql, $data);
-
-		return $this->getDB()->lastInsertId();
-    }
-
 
 }

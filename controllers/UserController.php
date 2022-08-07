@@ -10,7 +10,7 @@ class UserController extends BaseController
 {
     public function authAction()
     {
-        $mUser = new UserModel(DB::connect());
+        $mUser = new UserModel(DB::getConnect());
 
         // Если зашли на авторицацию разлогинимся
         $logOut = $mUser->logOut();
@@ -18,21 +18,22 @@ class UserController extends BaseController
         // Проверка на выход
         if( $logOut ){
             // Отправили форму
-            if( count($_POST) > 0){
+            if($this->request->isPost()){
                 // Проверяем логин пароль
-                $login = Check::cleanInput($_POST['login']);
-                $password = Check::cleanInput($_POST['password']);
+                $login = Check::cleanInput($this->request->get('post','login'));
+                $password = Check::cleanInput($this->request->get('post','password'));
                 // Ищем пользователя в базе
                 $user = $mUser->getByLogin($login);
     
                 // Если нашли и пароль правильный запоминаем в сессию
                 if( $user && $password == $user['pass'])
                 {
-                    $_SESSION['is_auth'] = true;
+                    $_SESSION['isAuth'] = true;
                     $_SESSION['userName'] = $user['name']??$user['login'];			
                     $_SESSION['userLogin'] = $user['login'];
+                    $_SESSION['userId'] = $user['id'];
                     // Если чекбокс 'запомнить' кидаем куки
-                    if( isset($_POST['remember']) && $_POST['remember'] )
+                    if( $this->request->get('post','remember') )
                     {
                         setcookie('login',$user['login'], time() + 3600 * 24 * 7, '/');
                         setcookie('pass',$mUser->myHash($user['pass']), time() + 3600 * 24 * 7, '/');
@@ -54,16 +55,20 @@ class UserController extends BaseController
                 }
             }
             else{
-                $_SESSION['loginRef'] = $_SERVER['HTTP_REFERER']??"/";
+                $_SESSION['loginRef'] = $this->request->get('server','HTTP_REFERER')??"/";
             }
         }
         $this->content = $this->build(
-                        __DIR__ . '/../v/v_auth.php',
+                        'v_auth',
                         [
                         'loginRef' => $_SESSION['loginRef'],
                         'msg' => $msg
                         ]);
         $this->title = "Авторизация";
+
+    }
+    public function logoutAction()
+    {
 
     }
     

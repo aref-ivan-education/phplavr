@@ -2,6 +2,7 @@
 namespace controllers;
 
 use core\DB;
+use core\Request;
 use models\CategoryModel;
 use models\UserModel;
 
@@ -9,13 +10,12 @@ class BaseController
 {
     protected $title;
     protected $content;
-	protected $id;
-	protected $userName;
-	protected $isAuth;
 	protected $msg404;
+	protected $request;
 
-    public function __construct()
+    public function __construct(Request $request)
 	{
+		$this->request = $request;
 		$this->title = 'Новости';
 		$this->content = '';
 		$this->msg404 = "Страница не найдена";
@@ -25,22 +25,22 @@ class BaseController
 	{
 		
 		$this->title = "Страница не найдена";
-		header("HTTP/1.0 404 Not Found");
-		$this->content = $this->build(__DIR__.'/../v/v_404.php',['msg' =>$this->msg404]);
+		header("HTTP/1.1 404 Not Found");
+		$this->content = $this->build('v_404',['msg' =>$this->msg404]);
 	}
 
     public function render()
 	{
-		$mCategory = new CategoryModel(DB::connect());
+		$mCategory = new CategoryModel(DB::getConnect());
 		$caterores = $mCategory->getAll();
 		echo $this->build(
-				__DIR__ . '/../v/v_main.php',
+				'v_main',
 				[
 					'title' => $this->title,
 					'content' => $this->content,
 					'categores' => $caterores,
-					'userName' => $this->userName,
-					'isAuth' => $this->isAuth
+					'userName' => $this->request->get("session","userName"),
+					'isAuth' => $this->request->get("session","isAuth")
 				]
 			 );
 	}
@@ -48,25 +48,13 @@ class BaseController
     protected function build(string $template, array $param = [])
     {
         extract($param);
-		
+		$template = sprintf('v/%s.php',$template);	
 		ob_start();
 		include $template;
 
 		return ob_get_clean();
     }
 
-	public function setID($id)
-	{
-		$this->id = $id;
-	}
-	public function setUserName($userName)
-	{
-		$this->userName = $userName;
-	}
-	public function setIsAuth($isAuth)
-	{
-		$this->isAuth = $isAuth;
-	}
-
+	
 
 }

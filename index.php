@@ -1,7 +1,10 @@
 <? 
+    include_once ('config.php');
     use core\DB;
-    use models\UserModel;
     use core\Check;   
+    use core\Request;
+    use models\UserModel;
+
     // автозагрузка классов(надо изменить на новую)
     function __autoload($classname) {
         include_once __DIR__ . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $classname) . '.php';
@@ -9,7 +12,7 @@
     // Включаем сессию
     session_start();
     // Подключение к базе данных
-    $db = DB::connect();
+    $db = DB::getConnect();
 
     // Получение адреса
     $params = explode('/', $_GET['chpu']);
@@ -18,23 +21,36 @@
 		unset($params[$end]);
 		$end--;
 	}
+
     // Подключаем модель пользователей. Смотрим авторизацию
     $uModel = new UserModel($db);
     $uModel->isAuth();
 
 
-	$controller = trim($params[0]??"articles");
+    
+	$controller = trim($params[0]??"article");
     $controller = Check::cleanInput($controller);
 
+    $id = false;
+    if(isset ($params[1]) && $params[1]!== "" && is_numeric($params[1]))
+    {
+        $id = $params[1];
+        $params[1] = 'post';
+    }
+   
     $action = $params[1]??'index';
     $action = Check::cleanInput($action);
-    $action = sprintf('%sAction', $action);
-
-    $id = isset($params[2]) && Check::id($params[2])? $params[2] : false;
+    
+    if(!$id)
+    {
+        $id = (isset($params[2]) && is_numeric($params[2]) && $params[2] !== "")
+              ?$params[2] : false;   
+    }
     $id = Check::cleanInput($id);
+    $_GET['id']=$id;
    
     switch ($controller) {
-        case 'articles':
+        case 'article':
             $controller = 'Article';
             break;
         case 'users':
@@ -46,20 +62,14 @@
             $action = "error404";
             break;
     }
-
     $controller = sprintf('controllers\%sController', $controller);
 
-    $controller = new $controller();
+    $request = new Request($_GET,$_POST,$_SERVER,$_COOKIE,$_FILES,$_SESSION);
+    $controller = new $controller($request);
+
+    $action = sprintf('%sAction', $action);
     $action = (method_exists($controller,$action))?$action : 'error404';
 
-    $controller->setId($id);
-    if($uModel->isAuth){
-        $userName = $uModel->getByLogin($_SESSION['userLogin'])['name'];
-
-        $controller->setUserName($userName);
-        $controller->setIsAuth($uModel->isAuth);
-    }
-    
     $controller->$action();
     $controller->render();
 

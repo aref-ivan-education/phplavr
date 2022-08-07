@@ -9,7 +9,7 @@
                 <article class="brick entry format-standard animate-this">
 
                     <div class="entry__thumb">
-                        <a href="/articles/post/<?=$article['id_article']?>" class="thumb-link">
+                        <a href="/article/<?=$article['id_article']?>" class="thumb-link">
                             <img src="/assets/images/thumbs/masonry/beetle-600.jpg" 
                                 srcset="/assets/images/thumbs/masonry/beetle-600.jpg 1x, /assets/images/thumbs/masonry/beetle-1200.jpg 2x" alt="">
                         </a>
@@ -24,7 +24,7 @@
                                 </span>
                             </div>
 
-                            <h1 class="entry__title"><a href="/articles/post/<?=$article['id_article']?>"><?=$article['title']?></a></h1>
+                            <h1 class="entry__title"><a href="/post/<?=$article['id_article']?>"><?=$article['title']?></a></h1>
                             
                         </div>
                         <div class="entry__excerpt">

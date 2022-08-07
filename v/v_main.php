@@ -72,7 +72,7 @@
                         <li class="has-children">
                             <a href="#0" title=""><?=$userName?></a>
                             <ul class="sub-menu">
-                                <li><a href="/articles/add" title="">Добавить статью</a></li>
+                                <li><a href="/article/add" title="">Добавить статью</a></li>
                                 <li><a href="/users/logout" title="">Выйти</a></li>
 
                         </li>
