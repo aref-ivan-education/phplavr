@@ -1,22 +1,16 @@
 <?
 namespace models;
 
+use core\DBDriver;
+
 class UserModel extends BaseModel
 {
     public $isAuth = false;
 
     private $hash = "4fgdhd43s9";
-    public function __construct(\PDO $db)
+    public function __construct(DBDriver $db)
     {
         parent::__construct($db,"users","id_user");
-    }
-    public function getByLogin($login)
-    {
-        $table = $this->getTable();
-        $sql = sprintf('SELECT * FROM %s WHERE `login` = :login', $table);
-        $query = $this->dbQuery($sql,['login'=>$login]);
-
-	    return $query->fetch();
     }
 
     public function isAuth()
@@ -27,7 +21,7 @@ class UserModel extends BaseModel
          }
          
          if (isset($_COOKIE['login'])){
-             $user=$this->getByLogin($_COOKIE['login']);
+             $user=$this->getOne("login",$_COOKIE['login']);
                  if($user){
                      if(isset($_COOKIE['pass']) && $_COOKIE['pass'] == $this->myHash($user['pass'])){  
                          $this->isAuth=TRUE;
@@ -52,7 +46,7 @@ class UserModel extends BaseModel
             unset($_SESSION['isAuth']);
             unset($_SESSION['userName']);
             unset($_SESSION['userLogin']);
-            unset($_SESSION['id']);
+            unset($_SESSION['userId']);
         }
         if(isset($_COOKIE['login'])){
             setcookie('login','', 1, '/');

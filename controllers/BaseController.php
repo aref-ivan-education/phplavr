@@ -2,6 +2,7 @@
 namespace controllers;
 
 use core\DB;
+use core\DBDriver;
 use core\Request;
 use models\CategoryModel;
 use models\UserModel;
@@ -31,7 +32,7 @@ class BaseController
 
     public function render()
 	{
-		$mCategory = new CategoryModel(DB::getConnect());
+		$mCategory = new CategoryModel(new DBDriver(DB::getConnect()));
 		$caterores = $mCategory->getAll();
 		echo $this->build(
 				'v_main',

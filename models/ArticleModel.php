@@ -1,11 +1,13 @@
 <?
 namespace models;
 
+use core\DBDriver;
+
 class ArticleModel extends BaseModel
 {
-    public function __construct(\PDO $db)
+    public function __construct(DBDriver $dbDr)
     {
-        parent::__construct($db,"articles","id_article");
+        parent::__construct($dbDr,"articles","id_article");
     }
 
 
@@ -18,9 +20,8 @@ class ArticleModel extends BaseModel
                         ORDER by a.date DESC'
                         ,
                         $table);
-        $query = $this->dbQuery($sql);
 
-	    return $query->fetchAll();
+	    return $this->dbDr->select($sql);
     }
 
     public function getByID($id)
@@ -32,11 +33,7 @@ class ArticleModel extends BaseModel
                         LEFT JOIN users as u ON a.id_user = u.id_user 
                         WHERE %s = :id',
                         $table,$idName);
-        $query = $this->dbQuery($sql,['id' => $id]);
-
-        return $query->fetch();
-        
-
+        return $this->dbDr->select($sql,['id' => $id],'one');
     }
 
 

@@ -1,6 +1,7 @@
 <? 
     include_once ('config.php');
     use core\DB;
+    use core\DBDriver;
     use core\Check;   
     use core\Request;
     use models\UserModel;
@@ -12,7 +13,7 @@
     // Включаем сессию
     session_start();
     // Подключение к базе данных
-    $db = DB::getConnect();
+    $db = new DBDriver( DB::getConnect());
 
     // Получение адреса
     $params = explode('/', $_GET['chpu']);
@@ -24,7 +25,7 @@
 
     // Подключаем модель пользователей. Смотрим авторизацию
     $uModel = new UserModel($db);
-    $uModel->isAuth();
+    // $uModel->isAuth();
 
 
     

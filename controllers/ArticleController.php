@@ -1,6 +1,7 @@
 <?
 namespace controllers;
 
+use core\DBDriver;
 use core\DB;
 use core\Check;
 use core\Request;
@@ -12,15 +13,14 @@ class ArticleController extends BaseController
 {
     public function indexAction()
     {
-        $mArticle = new ArticleModel(DB::getConnect());
+        $mArticle = new ArticleModel(new DBDriver(DB::getConnect()));
         $articles = $mArticle->getAll();
-
         $this->content = $this->build('v_home',["articles"=>$articles]);
     }
 
     public function postAction($msg = "")
     {
-        $mArticle = new ArticleModel(DB::getConnect());
+        $mArticle = new ArticleModel(new DBDriver(DB::getConnect()));
         $id=$this->request->get('get','id');
         if($article = $mArticle->getByID($id))
         {
@@ -43,9 +43,9 @@ class ArticleController extends BaseController
 
     public function addAction()
     {
-        $aModel = new ArticleModel(DB::getConnect());
-        // $uModel = new UserModel(DB::getConnect());
-        $catModel = new CategoryModel(DB::getConnect());
+        $aModel = new ArticleModel(new DBDriver(DB::getConnect()));
+        // $uModel = new UserModel(new DBDriver(DB::getConnect()));
+        $catModel = new CategoryModel(new DBDriver(DB::getConnect()));
         
         $categores = $catModel->getAll();
 
@@ -84,7 +84,7 @@ class ArticleController extends BaseController
                                 'id_user'=>$autor,
                                 ]);
                                 
-                header("Location: /articles/post/".$set);
+                header("Location: /article/post/".$set);
                 exit();
             }
         }
@@ -94,7 +94,7 @@ class ArticleController extends BaseController
             $msg = '';
         }
 
-        $this->content = $this->build(__DIR__ . 'post_add',
+        $this->content = $this->build('v_post_add',
                                     [
                                     'title'=>$title,
                                     'content'=>$content,
@@ -107,8 +107,8 @@ class ArticleController extends BaseController
 
     public function editAction()
     {
-        $aModel = new ArticleModel(DB::getConnect());
-        $catModel = new CategoryModel(DB::getConnect());
+        $aModel = new ArticleModel(new DBDriver(DB::getConnect()));
+        $catModel = new CategoryModel(new DBDriver(DB::getConnect()));
         $msg="";
         $id = $this->request->get('get',"id");
         if($article = $aModel->getByID($id) ){
@@ -152,7 +152,7 @@ class ArticleController extends BaseController
                     ]   ;
         
                     $aModel->updateByID($id , $updateData);
-                    header("Location: /articles/post/".$id);
+                    header("Location: /article/post/".$id);
                     exit();
                 }
                 
@@ -178,7 +178,7 @@ class ArticleController extends BaseController
 
     public function deleteAction()
     {
-        $aModel = new ArticleModel(DB::getConnect());
+        $aModel = new ArticleModel(new DBDriver(DB::getConnect()));
         $id = $this->request->get('get','id');
         if($aModel->getByID($id))
         {

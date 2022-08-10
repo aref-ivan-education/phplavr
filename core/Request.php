@@ -11,6 +11,7 @@ class Request
     private $session;
 
 	private const METHOD_POST = 'POST' ;
+	private const METHOD_GET = 'GET' ;
 
     public function __construct($get, $post, $server, $cookie, $file, $session)
 	{
@@ -39,5 +40,10 @@ class Request
     public function isPost()
 	{
 		return $this->server['REQUEST_METHOD']==self::METHOD_POST;
+	}
+	
+	public function isGet()
+	{
+		return $this->server['REQUEST_METHOD']==self::METHOD_GET;
 	}
 }
