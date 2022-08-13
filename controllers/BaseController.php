@@ -40,8 +40,8 @@ class BaseController
 					'title' => $this->title,
 					'content' => $this->content,
 					'categores' => $caterores,
-					'userName' => $this->request->get("session","userName"),
-					'isAuth' => $this->request->get("session","isAuth")
+					'userName' => $this->request->session('userName'),
+					'isAuth' => $this->request->session('isAuth')
 				]
 			 );
 	}

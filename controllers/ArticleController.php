@@ -21,14 +21,14 @@ class ArticleController extends BaseController
     public function postAction($msg = "")
     {
         $mArticle = new ArticleModel(new DBDriver(DB::getConnect()));
-        $id=$this->request->get('get','id');
+        $id=$this->request->get('id');
         if($article = $mArticle->getByID($id))
         {
             $this->content = $this->build(
                                         'v_post',
                                         [
                                         'article' => $article,
-                                        'isAuth' => $this->request->get('session','isAuth'),
+                                        'isAuth' => $this->request->session('isAuth'),
                                         'msg'=> $msg
                                         ]
                                         );
@@ -51,10 +51,10 @@ class ArticleController extends BaseController
 
         if($this->request->isPost())
         {
-            $title = Check::cleanInput($this->request->get('post','title'));
-            $content = Check::cleanInput($this->request->get('post','content'));			
-            $category = Check::cleanInput($this->request->get('post','category'));
-            $autor = $this->request->get('session','userId');
+            $title = Check::cleanInput($this->request->post('title'));
+            $content = Check::cleanInput($this->request->post('content'));			
+            $category = Check::cleanInput($this->request->post('category'));
+            $autor = $this->request->session('userId');
             
             
             if($title == '' || $content == '')
@@ -110,16 +110,16 @@ class ArticleController extends BaseController
         $aModel = new ArticleModel(new DBDriver(DB::getConnect()));
         $catModel = new CategoryModel(new DBDriver(DB::getConnect()));
         $msg="";
-        $id = $this->request->get('get',"id");
+        $id = $this->request->get('id');
         if($article = $aModel->getByID($id) ){
             $autor = $article['user']??"";
             $categores = $catModel->getAll();
     
             if($this->request->isPost())
             {
-                $titlePost = Check::cleanInput($this->request->get('post','title'));
-                $contentPost = Check::cleanInput($this->request->get('post','content'));
-                $category = Check::cleanInput($this->request->get('post','category'));
+                $titlePost = Check::cleanInput($this->request->post('title'));
+                $contentPost = Check::cleanInput($this->request->post('content'));
+                $category = Check::cleanInput($this->request->post('category'));
         
                 if($titlePost == '' || $contentPost == '')
                 {
@@ -164,7 +164,7 @@ class ArticleController extends BaseController
                             'article' => $article,
                             'categores' => $categores,
                             'msg' => $msg,
-                            'isAuth' => $this->request->get('session','isAuth')  
+                            'isAuth' => $this->request->session('isAuth')  
                             ]) ;        
             $this->title = "Редактирование статьи : " . $article['title'] ;
         }
@@ -179,7 +179,7 @@ class ArticleController extends BaseController
     public function deleteAction()
     {
         $aModel = new ArticleModel(new DBDriver(DB::getConnect()));
-        $id = $this->request->get('get','id');
+        $id = $this->request->get('id');
         if($aModel->getByID($id))
         {
             $aModel->deleteByID($id);

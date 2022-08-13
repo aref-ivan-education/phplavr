@@ -21,8 +21,8 @@ class UserController extends BaseController
             // Отправили форму
             if($this->request->isPost()){
                 // Проверяем логин пароль
-                $login = Check::cleanInput($this->request->get('post','login'));
-                $password = Check::cleanInput($this->request->get('post','password'));
+                $login = Check::cleanInput($this->request->post('login'));
+                $password = Check::cleanInput($this->request->post('password'));
                 // Ищем пользователя в базе
                 $user = $mUser->getone("login",$login);
     
@@ -34,7 +34,7 @@ class UserController extends BaseController
                     $_SESSION['userLogin'] = $user['login'];
                     $_SESSION['userId'] = $user['id_user'];
                     // Если чекбокс 'запомнить' кидаем куки
-                    if( $this->request->get('post','remember') )
+                    if( $this->request->post('remember') )
                     {
                         setcookie('login',$user['login'], time() + 3600 * 24 * 7, '/');
                         setcookie('pass',$mUser->myHash($user['pass']), time() + 3600 * 24 * 7, '/');
@@ -56,7 +56,7 @@ class UserController extends BaseController
                 }
             }
             else{
-                $_SESSION['loginRef'] = $this->request->get('server','HTTP_REFERER')??"/";
+                $_SESSION['loginRef'] = $this->request->server('HTTP_REFERER')??"/";
             }
         }
         $this->content = $this->build(

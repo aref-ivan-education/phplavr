@@ -2,18 +2,23 @@
 namespace models;
 
 use core\DBDriver;
+use core\Validator;
 
 abstract class BaseModel
 {
     protected $dbDr;
-    private $table;
-    private $idName;
+    protected $table;
+    protected $idName;
+    protected $validator;
 
-    public function __construct(DBDriver $dbDr, $table ,$idName)
+    public function __construct(DBDriver $dbDr,Validator $validator, $table ,$idName)
     {
         $this->dbDr = $dbDr;
+        $this->validator = $validator;
         $this->table = $table;
         $this->idName = $idName;
+
+      
     }
 
     public function getAll()
@@ -28,39 +33,33 @@ abstract class BaseModel
         return $this->dbDr->select($sql,['field'=>$fieldValue],'one');
     }
 
-    public function deleteByField($fieldName,$fieldValue)
+    public function add($data)
+    {   
+        return $this->dbDr->add($this->table,$data);
+    }
+    
+    public function update($id, $data, $where)
     {
-        $this->dbDr->delete($this->table,$fieldName,$fieldValue);
-    } 
+        return $this->dbDr->update($this->table, $data, $where  );
+    }
 
-    public function deleteByID($id)
+    public function delete($where)
     {
-        $this->dbDr->delete($this->table,$this->idName,$id);
+        $this->dbDr->delete($this->table,$where);
     } 
 
     public function updateByID($id,$data)
     {
-        return $this->dbDr->update($this->table , $this->idName, $id, $data);
-    }
-    public function add($data)
-    {
-   
-        return $this->dbDr->add($this->table,$data);
-
+        $where = sprintf('%s = %d',$this->idName , $id);
+        return $this->dbDr->update($this->table, $data, $where  );
     }
 
-    public function getTable()
+    public function deleteByID($id)
     {
-        return $this->table;
-    }
-    public function getIdName()
-    {
-        return $this->idName;
-    }
-    public function getDB()
-    {
-        return $this->dbDR;
-    }
+        $where = sprintf('%s = %d',$this->idName , $id);
+        $this->dbDr->delete($this->table , $where) ;
+    } 
+
 
 }
 

@@ -44,15 +44,14 @@ class DBDriver
 		return $this->pdo->lastInsertId();
     }
 
-    public function update($table,$targetName,$targetValue,array $params)
+    public function update($table,array $params, $where)
     {
         $keyMask=implode(' , ',array_map(function($k){
             return sprintf('%1$s = :%1$s',$k);}
             ,array_keys($params)
             )
         );
-        $params[$targetName]= $targetValue;
-        $sql = sprintf('UPDATE %1$s SET %2$s WHERE  %3$s = :%3$s',$table,$keyMask,$targetName);
+        $sql = sprintf('UPDATE %1$s SET %2$s WHERE  %3$s', $table , $keyMask , $where);
         $query=$this->pdo->prepare($sql);
         $query->execute($params);
         $this->dbCheckError($query);  
@@ -60,10 +59,10 @@ class DBDriver
         return $query;     
     }
 
-    public function delete($table,$targetName,$targetValue)
+    public function delete($table,$where)
     {
-        $sql = sprintf('DELETE FROM %s WHERE %s = :t', $table,$targetName);
-        $query = $this->dbQuery($sql,['t'=>$targetValue]);
+        $sql = sprintf('DELETE FROM %s WHERE %s', $table,$where);
+        $query = $this->dbQuery($sql);
     }
 
     private function dbQuery($sql, $params = [])
